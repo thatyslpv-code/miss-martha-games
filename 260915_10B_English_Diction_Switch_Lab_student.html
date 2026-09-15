@@ -183,7 +183,11 @@ const tasks=[
 {type:'scramble',round:'ROUND 3 • UNSCRAMBLE IT',q:'Build the FORMAL sentence.',words:['Students','are','requested','to','arrive','on','time.'],target:'Students are requested to arrive on time.'},
 {type:'scramble',round:'ROUND 3 • UNSCRAMBLE IT',q:'Build the INFORMAL sentence.',words:['We','can’t','make','it','today.'],target:'We can’t make it today.'},
 {type:'scramble',round:'ROUND 3 • UNSCRAMBLE IT',q:'Build the FORMAL sentence.',words:['The','results','indicate','significant','improvement.'],target:'The results indicate significant improvement.'},
-{type:'scramble',round:'ROUND 3 • UNSCRAMBLE IT',q:'Build the INFORMAL sentence.',words:['The','results','got','way','better.'],target:'The results got way better.'}
+{type:'scramble',round:'ROUND 3 • UNSCRAMBLE IT',q:'Build the INFORMAL sentence.',words:['The','results','got','way','better.'],target:'The results got way better.'},
+{type:'choice',round:'ROUND 4 • AUDIENCE CHECK',q:'Which sentence is BEST for a school email to parents?',a:['Hey! The event starts at 9, don’t be late!','The event will begin promptly at 9:00 a.m.','Yo, be there at nine.'],c:1,exp:'A school email to parents calls for formal, respectful diction.'},
+{type:'choice',round:'ROUND 4 • AUDIENCE CHECK',q:'Which sentence is BEST for a text message to a friend?',a:['Would you be available to accompany me after school?','Do you wanna hang out after school?','Your presence is respectfully requested after school.'],c:1,exp:'A text to a friend usually uses informal, conversational diction.'},
+{type:'scramble',round:'ROUND 4 • UNSCRAMBLE IT',q:'Build the FORMAL sentence.',words:['Please','submit','your','assignment','by','Friday.'],target:'Please submit your assignment by Friday.'},
+{type:'scramble',round:'ROUND 4 • UNSCRAMBLE IT',q:'Build the INFORMAL sentence.',words:['Send','me','your','homework','by','Friday.'],target:'Send me your homework by Friday.'}
 ];
 let i=0,score=0,locked=false,name='';
 function start(){name=document.getElementById('student').value.trim();if(!name)return alert('Please enter your name.');document.getElementById('login').classList.add('hidden');document.getElementById('game').classList.remove('hidden');render()}
