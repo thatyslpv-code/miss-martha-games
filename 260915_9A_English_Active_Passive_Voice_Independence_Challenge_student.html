@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>260915 9A English Active Passive Voice Challenge</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800&display=swap');
+
+:root{
+  --green:#0f9d58;
+  --green-dark:#087a43;
+  --red:#d92d20;
+  --red-dark:#a61b12;
+  --cream:#fffaf0;
+  --ink:#18332d;
+  --gold:#f4c542;
+  --mint:#dff7ea;
+  --rose:#ffe0dc;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:'Nunito',system-ui,sans-serif;
+  color:var(--ink);
+  min-height:100vh;
+  background:
+    radial-gradient(circle at 12% 12%,#ffffff 0 6%,transparent 6.5%),
+    radial-gradient(circle at 88% 18%,#ffe6e3 0 8%,transparent 8.5%),
+    linear-gradient(135deg,#e9fff4 0%,#fffef8 46%,#ffe9e6 100%);
+}
+.wrap{max-width:980px;margin:auto;padding:22px}
+.hero{
+  position:relative;
+  overflow:hidden;
+  border-radius:30px;
+  padding:28px;
+  background:
+    linear-gradient(90deg,rgba(15,157,88,.95) 0 33%,rgba(255,255,255,.97) 33% 66%,rgba(217,45,32,.95) 66% 100%);
+  border:4px solid #fff;
+  box-shadow:0 18px 40px rgba(50,80,60,.18);
+}
+.hero:before{
+  content:"✦  ✦  ✦  ✦  ✦  ✦  ✦  ✦  ✦";
+  position:absolute;left:0;right:0;top:8px;
+  text-align:center;letter-spacing:12px;color:rgba(255,255,255,.85);font-size:18px;
+}
+.hero:after{
+  content:"VIVA MÉXICO";
+  position:absolute;right:20px;bottom:16px;
+  font-family:'Fredoka',sans-serif;font-weight:700;font-size:18px;
+  background:#fff8;padding:7px 12px;border-radius:999px;color:#7b1d17;
+}
+h1{
+  font-family:'Fredoka',sans-serif;
+  font-size:clamp(36px,6vw,64px);
+  line-height:.95;
+  margin:14px 0 8px;
+  color:#18332d;
+  text-shadow:2px 2px 0 rgba(255,255,255,.7);
+}
+.sub{font-weight:900;font-size:18px;background:#ffffffc9;display:inline-block;padding:8px 12px;border-radius:14px}
+.card{
+  margin-top:18px;
+  background:#fffdf9f4;
+  border:3px solid #fff;
+  border-radius:24px;
+  padding:22px;
+  box-shadow:0 14px 30px rgba(30,70,50,.13)
+}
+.hidden{display:none}
+.tag{
+  font-size:13px;font-weight:1000;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--red)
+}
+.q{
+  font-family:'Fredoka',sans-serif;
+  font-size:27px;font-weight:700;
+  margin:8px 0 14px;color:#174b3a
+}
+input,button{font:inherit}
+input[type=text]{
+  width:100%;padding:14px 15px;border-radius:14px;
+  border:3px solid #a8dec4;background:white;color:var(--ink);
+  font-size:17px;outline:none
+}
+input[type=text]:focus{border-color:var(--red)}
+button{
+  border:0;border-radius:15px;padding:13px 16px;
+  font-weight:900;cursor:pointer;transition:.15s
+}
+button:hover{transform:translateY(-2px)}
+.primary{
+  background:linear-gradient(90deg,var(--green),#47c986);
+  color:white;box-shadow:0 5px 0 var(--green-dark)
+}
+.choice{
+  width:100%;margin:7px 0;text-align:left;
+  background:white;color:var(--ink);
+  border:3px solid #bce8d0;
+  box-shadow:0 5px 0 #9bd7b7
+}
+.choice:nth-child(even){border-color:#ffc4bd;box-shadow:0 5px 0 #efa79f}
+.choice.correct{background:#c9f6dc;border-color:#28a861;box-shadow:none}
+.choice.wrong{background:#ffd4ce;border-color:#d92d20;box-shadow:none}
+.progress{
+  height:14px;background:#edf4ef;border-radius:99px;overflow:hidden;
+  margin:14px 0;border:2px solid white
+}
+.bar{
+  height:100%;width:0%;
+  background:linear-gradient(90deg,var(--green),var(--gold),var(--red))
+}
+.sample{
+  background:linear-gradient(135deg,#edfdf4,#fff2ef);
+  border:3px dashed #e36e61;
+  padding:16px;border-radius:17px;font-size:19px;font-weight:800
+}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:720px){.grid{grid-template-columns:1fr}}
+.wordbank{display:flex;flex-wrap:wrap;gap:9px;margin:14px 0}
+.word{
+  background:#fff;border:3px solid #8fd5b1;
+  box-shadow:0 4px 0 #74bd98;color:#174b3a
+}
+.word:nth-child(3n){border-color:#f3a49b;box-shadow:0 4px 0 #dc8b82}
+.word.used{opacity:.35;pointer-events:none}
+.answerline{
+  min-height:58px;padding:10px;border:3px dashed #89cdaa;
+  background:#f8fffb;border-radius:15px;
+  display:flex;gap:8px;flex-wrap:wrap;align-items:center
+}
+.answerword{
+  padding:8px 10px;border-radius:10px;background:#e3f8ec;
+  border:2px solid #9bd7b7;font-weight:900
+}
+.feedback{min-height:28px;margin-top:10px;font-weight:900;color:#a2251c}
+.scorebox{
+  font-family:'Fredoka',sans-serif;font-size:34px;font-weight:700;color:#0e6f45
+}
+.flagrow{display:flex;gap:8px;margin-top:10px}
+.flagrow span{height:8px;flex:1;border-radius:99px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <h1>ACTIVE ↔ PASSIVE<br>VOICE SWITCH</h1>
+  <div class="sub">9A English • Independence Edition • September 15, 2026</div>
+  <div class="flagrow"><span style="background:#0f9d58"></span><span style="background:#fff"></span><span style="background:#d92d20"></span></div>
+</section>
+
+<section class="card" id="login">
+  <div class="tag">Mission setup</div>
+  <div class="q">Enter your name to begin.</div>
+  <input id="student" type="text" placeholder="First and last name">
+  <button class="primary" style="width:100%;margin-top:12px" onclick="start()">START CHALLENGE</button>
+</section>
+
+<section class="card hidden" id="game">
+  <div class="tag" id="round"></div>
+  <div class="progress"><div class="bar" id="bar"></div></div>
+  <div class="q" id="question"></div>
+  <div id="content"></div>
+  <div class="feedback" id="feedback"></div>
+  <button class="primary hidden" id="nextBtn" style="margin-top:12px" onclick="next()">NEXT</button>
+</section>
+
+<section class="card hidden" id="done">
+  <div class="tag">Challenge complete</div>
+  <div class="q">¡Buen trabajo, <span id="who"></span>!</div>
+  <div class="sample" style="text-align:center;margin:14px 0">
+    <div style="font-size:14px;font-weight:1000;color:#b12d22;letter-spacing:.1em">FINAL SCORE</div>
+    <div class="scorebox" id="score"></div>
+    <div id="percent" style="font-family:'Fredoka',sans-serif;font-size:48px;font-weight:700;color:#d92d20"></div>
+    <div style="font-weight:900;margin-top:8px">9A English • Active & Passive Voice</div>
+    <div style="font-weight:800;color:#5c756a">September 15, 2026</div>
+  </div>
+  <p><b>Take a screenshot of this screen and upload it to Algebraix as your evidence.</b></p>
+</section>
+
+</div>
+
+<script>
+const tasks=[
+{type:'choice',round:'ROUND 1 • ACTIVE OR PASSIVE?',q:'“Students decorate the school every September.”',a:['Active','Passive'],c:0,exp:'The subject performs the action.'},
+{type:'choice',round:'ROUND 1 • ACTIVE OR PASSIVE?',q:'“The school is decorated by students every September.”',a:['Active','Passive'],c:1,exp:'The subject receives the action.'},
+{type:'choice',round:'ROUND 1 • ACTIVE OR PASSIVE?',q:'“Traditional food is prepared for the kermés.”',a:['Active','Passive'],c:1,exp:'The food receives the action.'},
+{type:'choice',round:'ROUND 1 • ACTIVE OR PASSIVE?',q:'“Teachers organize the celebration.”',a:['Active','Passive'],c:0,exp:'Teachers perform the action.'},
+
+{type:'choice',round:'ROUND 2 • SWITCH THE VOICE',q:'Choose the correct PASSIVE version.',sample:'Students wave the Mexican flag.',a:['The Mexican flag is waved by students.','The Mexican flag waved students.','Students are waved by the Mexican flag.'],c:0,exp:'Present simple passive = is/are + past participle.'},
+{type:'choice',round:'ROUND 2 • SWITCH THE VOICE',q:'Choose the correct PASSIVE version.',sample:'The school organized the kermés.',a:['The kermés organizes the school.','The kermés was organized by the school.','The school was organized by the kermés.'],c:1,exp:'Past simple passive = was/were + past participle.'},
+{type:'choice',round:'ROUND 2 • SWITCH THE VOICE',q:'Choose the correct ACTIVE version.',sample:'Traditional songs are performed by the students.',a:['Students perform traditional songs.','Traditional songs perform students.','Students are performed by traditional songs.'],c:0,exp:'The doer becomes the subject in active voice.'},
+{type:'choice',round:'ROUND 2 • SWITCH THE VOICE',q:'Choose the correct PASSIVE version.',sample:'People celebrate Independence Day in September.',a:['Independence Day is celebrated in September.','Independence Day celebrates people in September.','People are celebrated by Independence Day.'],c:0,exp:'Keep the same tense when changing voice.'},
+
+{type:'choice',round:'ROUND 3 • FIX THE SENTENCE',q:'Which sentence is correct?',a:['The school is decorate every year.','The school is decorated every year.','The school decorated is every year.'],c:1,exp:'Passive voice needs BE + past participle.'},
+{type:'choice',round:'ROUND 3 • FIX THE SENTENCE',q:'Which sentence is correct?',a:['The decorations was placed yesterday.','The decorations were placed yesterday.','The decorations were place yesterday.'],c:1,exp:'Plural subject → were + past participle.'},
+{type:'choice',round:'ROUND 3 • FIX THE SENTENCE',q:'Which sentence is correct?',a:['The food was prepared by parents.','The food prepared was by parents.','The food was prepare by parents.'],c:0,exp:'Past passive = was/were + past participle.'},
+
+{type:'scramble',round:'ROUND 4 • UNSCRAMBLE IT',q:'Build the PASSIVE sentence.',words:['The','school','is','decorated','every','September.'],target:'The school is decorated every September.'},
+{type:'scramble',round:'ROUND 4 • UNSCRAMBLE IT',q:'Build the ACTIVE sentence.',words:['Students','prepare','traditional','food.'],target:'Students prepare traditional food.'},
+{type:'scramble',round:'ROUND 4 • UNSCRAMBLE IT',q:'Build the PASSIVE sentence.',words:['The','event','was','organized','by','teachers.'],target:'The event was organized by teachers.'},
+{type:'scramble',round:'ROUND 4 • UNSCRAMBLE IT',q:'Build the PASSIVE sentence.',words:['The','Mexican','flag','is','displayed','at','school.'],target:'The Mexican flag is displayed at school.'}
+];
+
+let i=0,score=0,locked=false,name='';
+
+function start(){
+  name=document.getElementById('student').value.trim();
+  if(!name)return alert('Please enter your name.');
+  document.getElementById('login').classList.add('hidden');
+  document.getElementById('game').classList.remove('hidden');
+  render();
+}
+
+function render(){
+  locked=false;
+  const t=tasks[i];
+  round.textContent=t.round;
+  question.textContent=t.q;
+  bar.style.width=((i)/tasks.length*100)+'%';
+  feedback.textContent='';
+  nextBtn.classList.add('hidden');
+  content.innerHTML='';
+
+  if(t.sample){
+    const s=document.createElement('div');
+    s.className='sample';
+    s.textContent=t.sample;
+    content.appendChild(s);
+  }
+
+  if(t.type==='choice'){
+    const box=document.createElement('div');
+    box.className='grid';
+    t.a.forEach((x,j)=>{
+      const b=document.createElement('button');
+      b.className='choice';
+      b.textContent=x;
+      b.onclick=()=>pick(j,b);
+      box.appendChild(b);
+    });
+    content.appendChild(box);
+  }else{
+    const bank=document.createElement('div');
+    bank.className='wordbank';
+    const line=document.createElement('div');
+    line.className='answerline';
+    line.id='answerline';
+
+    [...t.words].sort(()=>Math.random()-.5).forEach(w=>{
+      const b=document.createElement('button');
+      b.className='word';
+      b.textContent=w;
+      b.onclick=()=>{
+        if(locked)return;
+        b.classList.add('used');
+        const x=document.createElement('span');
+        x.className='answerword';
+        x.textContent=w;
+        x.onclick=()=>{b.classList.remove('used');x.remove()};
+        line.appendChild(x);
+      };
+      bank.appendChild(b);
+    });
+
+    content.appendChild(bank);
+    content.appendChild(line);
+    const check=document.createElement('button');
+    check.className='primary';
+    check.style.marginTop='12px';
+    check.textContent='CHECK SENTENCE';
+    check.onclick=checkScramble;
+    content.appendChild(check);
+  }
+}
+
+function pick(j,b){
+  if(locked)return;
+  locked=true;
+  const t=tasks[i];
+  const buttons=[...document.querySelectorAll('.choice')];
+  buttons[t.c].classList.add('correct');
+  if(j===t.c){
+    score++;
+    feedback.textContent='Correct! '+t.exp;
+  }else{
+    b.classList.add('wrong');
+    feedback.textContent='Not quite. '+t.exp;
+  }
+  nextBtn.classList.remove('hidden');
+}
+
+function checkScramble(){
+  if(locked)return;
+  const t=tasks[i];
+  const built=[...document.querySelectorAll('#answerline .answerword')].map(x=>x.textContent).join(' ');
+  if(!built)return alert('Build the sentence first.');
+  locked=true;
+  if(built===t.target){
+    score++;
+    feedback.textContent='Correct! Perfect word order.';
+  }else{
+    feedback.textContent='Almost. Correct answer: '+t.target;
+  }
+  nextBtn.classList.remove('hidden');
+}
+
+function next(){
+  i++;
+  if(i>=tasks.length){finish();return;}
+  render();
+}
+
+function finish(){
+  game.classList.add('hidden');
+  done.classList.remove('hidden');
+  who.textContent=name;
+  const pct=Math.round((score/tasks.length)*100);
+  document.getElementById('score').textContent=`${score} / ${tasks.length} correct`;
+  document.getElementById('percent').textContent=`${pct}%`;
+}
+</script>
+</body>
+</html>
