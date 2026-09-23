@@ -1,0 +1,46 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>7A Word Vibes</title>
+<style>
+:root{--purple:#351c75;--cyan:#00c2c7;--coral:#ff6b6b;--yellow:#ffd93d;--ink:#21163a;--card:#fffdf8}
+*{box-sizing:border-box} body{margin:0;font-family:Trebuchet MS,Arial,sans-serif;background:linear-gradient(135deg,var(--purple),#6c2bd9 45%,var(--cyan));color:#fff;min-height:100vh}
+.wrap{max-width:980px;margin:auto;padding:22px} .hero{background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.25);border-radius:28px;padding:22px}
+h1{font-size:clamp(38px,8vw,74px);margin:0;line-height:.95} .sub{font-size:clamp(17px,2.6vw,24px);margin-top:10px}
+.panel{background:var(--card);color:var(--ink);border-radius:26px;padding:24px;margin-top:20px;min-height:360px;box-shadow:0 18px 45px rgba(0,0,0,.2)}
+.badge{display:inline-block;background:var(--yellow);padding:8px 14px;border-radius:999px;font-weight:900;font-size:18px}
+.prompt{font-size:clamp(26px,4vw,42px);font-weight:900;margin:24px 0;line-height:1.15}
+.options{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+button{border:0;border-radius:18px;padding:18px 16px;font-size:clamp(20px,2.5vw,28px);font-weight:900;cursor:pointer}
+.option{background:#f0edff;color:#2d1b69;border:3px solid transparent} .option:hover{border-color:#6c2bd9}
+.controls{display:flex;justify-content:space-between;gap:12px;margin-top:22px;flex-wrap:wrap}
+.primary{background:var(--coral);color:white} .secondary{background:#0e183f;color:#fff}
+.progress{height:14px;background:rgba(255,255,255,.22);border-radius:999px;overflow:hidden;margin-top:16px} .bar{height:100%;background:var(--yellow);width:0}
+.feedback{font-size:20px;font-weight:800;min-height:28px;margin-top:16px} .hidden{display:none} .scorebox{text-align:center;padding:18px} .bigscore{font-size:84px;font-weight:900;color:#6c2bd9}
+</style></head><body>
+<style>
+#loginGate{position:fixed;inset:0;background:linear-gradient(135deg,#10152d,#273b7a);display:grid;place-items:center;z-index:9999;padding:20px}
+#loginCard{width:min(620px,96vw);background:white;color:#17203b;border-radius:26px;padding:26px;box-shadow:0 20px 70px #0008}
+#loginCard h2{font-size:34px;margin:0 0 8px}#loginCard input{width:100%;padding:15px;margin:8px 0 14px;border:2px solid #aebbd0;border-radius:14px;font-size:19px;color:#17203b;background:white}
+#loginCard button{width:100%;padding:15px;border:0;border-radius:14px;font-size:20px;font-weight:900;background:#ffd93d;color:#18203a;cursor:pointer}
+#loginErr{color:#b42318;font-weight:800;min-height:22px}
+</style>
+<div id="loginGate"><div id="loginCard"><h2>Word Vibes</h2><p><b>7A English</b> · Enter your school information to begin.</p><label>Full name</label><input id="studentName" autocomplete="name"><label>School email</label><input id="studentEmail" type="email" placeholder="name@colegiointernacional.edu.mx"><div id="loginErr"></div><button id="beginGame">BEGIN</button></div></div>
+<div class="wrap">
+<div class="hero"><h1>WORD VIBES</h1><div class="sub">7A English · Same Meaning, Different Feeling</div><div class="progress"><div id="bar" class="bar"></div></div></div>
+<div class="panel"><div id="game"><span id="badge" class="badge"></span><div id="prompt" class="prompt"></div><div id="options" class="options"></div><div id="feedback" class="feedback"></div><div class="controls"><button class="secondary" onclick="restart()">Restart</button><button id="next" class="primary hidden" onclick="nextQ()">Next</button></div></div>
+<div id="done" class="hidden scorebox"><h2 style="font-size:42px;margin-bottom:0">Great job!</h2><div id="score" class="bigscore"></div><p style="font-size:24px;font-weight:900">Take a screenshot of your score and upload it to Algebraix.</p><button class="primary" onclick="restart()">Play Again</button></div></div></div>
+<script>
+const original=[{"round":"Round 1 · Denotation or Connotation","prompt":"A rose is a type of flower.","options":["Denotation","Connotation"],"answer":"Denotation"},{"round":"Round 1 · Denotation or Connotation","prompt":"She is the rose of the family.","options":["Denotation","Connotation"],"answer":"Connotation"},{"round":"Round 1 · Denotation or Connotation","prompt":"A fox is a wild animal.","options":["Denotation","Connotation"],"answer":"Denotation"},{"round":"Round 1 · Denotation or Connotation","prompt":"He is a fox when it comes to business.","options":["Denotation","Connotation"],"answer":"Connotation"},{"round":"Round 1 · Denotation or Connotation","prompt":"Ice is frozen water.","options":["Denotation","Connotation"],"answer":"Denotation"},{"round":"Round 2 · Word Vibes","prompt":"youthful","options":["Positive","Neutral","Negative"],"answer":"Positive"},{"round":"Round 2 · Word Vibes","prompt":"young","options":["Positive","Neutral","Negative"],"answer":"Neutral"},{"round":"Round 2 · Word Vibes","prompt":"immature","options":["Positive","Neutral","Negative"],"answer":"Negative"},{"round":"Round 2 · Word Vibes","prompt":"assertive","options":["Positive","Neutral","Negative"],"answer":"Positive"},{"round":"Round 2 · Word Vibes","prompt":"bossy","options":["Positive","Neutral","Negative"],"answer":"Negative"},{"round":"Round 3 · Choose the Best Word","prompt":"She knows what she wants and expresses her opinion clearly.","options":["assertive","bossy"],"answer":"assertive"},{"round":"Round 3 · Choose the Best Word","prompt":"He refuses to listen to anyone, even when he is wrong.","options":["determined","stubborn"],"answer":"stubborn"},{"round":"Round 3 · Choose the Best Word","prompt":"The hotel was small but warm and comfortable.","options":["cozy","cramped"],"answer":"cozy"},{"round":"Round 3 · Choose the Best Word","prompt":"That jacket looks old, but in a stylish and interesting way.","options":["vintage","outdated"],"answer":"vintage"},{"round":"Round 3 · Choose the Best Word","prompt":"He spends very little money because he is careful with it.","options":["frugal","cheap"],"answer":"frugal"},{"round":"Bonus · Vibe Trap","prompt":"She kept practicing until she finally learned the song.","options":["persistent","annoying"],"answer":"persistent"},{"round":"Bonus · Vibe Trap","prompt":"The room was so small that we could barely move.","options":["cozy","cramped"],"answer":"cramped"},{"round":"Bonus · Vibe Trap","prompt":"He takes risks without thinking about the consequences.","options":["courageous","reckless"],"answer":"reckless"}]; let qs=[],i=0,score=0,locked=false;
+const shuffle=a=>[...a].sort(()=>Math.random()-.5);
+function restart(){qs=shuffle(original);i=0;score=0;document.getElementById('done').classList.add('hidden');document.getElementById('game').classList.remove('hidden');render()}
+function render(){locked=false;const q=qs[i];badge.textContent=q.round;prompt.textContent=q.prompt;feedback.textContent='';next.classList.add('hidden');options.innerHTML='';shuffle(q.options).forEach(o=>{const b=document.createElement('button');b.className='option';b.textContent=o;b.onclick=()=>pick(o,b);options.appendChild(b)});bar.style.width=(i/qs.length*100)+'%'}
+function pick(o,b){if(locked)return;locked=true;const q=qs[i];if(o===q.answer){score++;b.style.background='#c8f7d4';b.style.borderColor='#2aa65a';feedback.textContent='Correct!'}else{b.style.background='#ffd6d6';b.style.borderColor='#e64b4b';feedback.textContent='Not quite — correct answer: '+q.answer;document.querySelectorAll('.option').forEach(x=>{if(x.textContent===q.answer)x.style.background='#c8f7d4'})}next.classList.remove('hidden')}
+function nextQ(){i++;if(i>=qs.length)finish();else render()}
+function finish(){MM_save(score);game.classList.add('hidden');done.classList.remove('hidden');document.getElementById('score').textContent=score+' / '+qs.length;bar.style.width='100%'}
+restart();
+</script>
+<script>
+const MM_EDGE="https://ioinjygibdzkoonuvknd.supabase.co/functions/v1/game-results", MM_GAME="260923_7A_WORD_VIBES", MM_GRADE="7A", MM_MAX=18;
+let MM_STUDENT={name:'',email:''}, MM_SAVED=false;
+document.getElementById('beginGame').onclick=()=>{const n=document.getElementById('studentName').value.trim(),e=document.getElementById('studentEmail').value.trim().toLowerCase(),err=document.getElementById('loginErr');if(n.length<3){err.textContent='Please enter your full name.';return}if(!e.endsWith('@colegiointernacional.edu.mx')){err.textContent='Use your school email: @colegiointernacional.edu.mx';return}MM_STUDENT={name:n,email:e};document.getElementById('loginGate').remove();};
+async function MM_save(score){if(MM_SAVED||!MM_STUDENT.name)return;const pct=Math.round(score/MM_MAX*100);try{const r=await fetch(MM_EDGE,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({student_name:MM_STUDENT.name,student_group:MM_GRADE,game_id:MM_GAME,grade:MM_GRADE,score:score,max_score:MM_MAX,percentage:pct,completed:true})});if(r.ok)MM_SAVED=true;}catch(e){}}
+</script>
+</body></html>
