@@ -21,12 +21,12 @@ button:disabled{opacity:.5;cursor:not-allowed}.choice{display:block;width:100%;t
 @media(max-width:600px){main{margin:0;min-height:100vh;border-radius:0;padding:16px}.card{padding:16px}.sentence{font-size:1.2rem}header svg{width:100px}header{padding:16px}}
 </style></head><body><main>
 <header><div><small>MISS MARTHA · 10B ENGLISH · SEPTEMBER 30, 2026</small><h1>Detail Detectives</h1><div class="subtitle">Matching Pairs</div></div><svg viewBox="0 0 260 210" role="img" aria-label="Magnifying glass over a phrase"><rect x="30" y="48" width="192" height="112" rx="18" fill="#fff" stroke="#743c20" stroke-width="6"/><path d="M55 80h138M55 105h115M55 130h125" stroke="#f2a13a" stroke-width="10" stroke-linecap="round"/><circle cx="150" cy="103" r="49" fill="#8be0ec99" stroke="#274f8b" stroke-width="11"/><path d="m184 138 48 50" stroke="#274f8b" stroke-width="19" stroke-linecap="round"/><path d="M112 119h65" stroke="#ec518f" stroke-width="8" stroke-linecap="round"/></svg></header>
-<section id="welcome" class="card"><h2>Mission briefing</h2><p>Read the full sentence. Match the complete prepositional phrase with its object and the word it modifies.</p><p>12 rounds · One attempt per round · Your score and corrections appear at the end.</p><label for="name">Full name</label><input id="name" autocomplete="name" placeholder="Type your full name"><p><button id="start">Start the game</button></p><p id="nameError" class="muted" role="alert"></p></section>
+<section id="welcome" class="card"><h2>Mission briefing</h2><p>Read the full sentence. Match the complete prepositional phrase with its object and the word it modifies.</p><p>12 rounds · One attempt per round · Your score and corrections appear at the end.</p><label for="name">Full name</label><input id="name" autocomplete="name" placeholder="Type your full name"><label for="email">School email</label><input id="email" type="email" inputmode="email" autocomplete="email" placeholder="name@school.edu"><p><button id="start">Start the game</button></p><p id="nameError" class="muted" role="alert"></p></section>
 <section id="play" class="hidden"><div class="row"><span id="round" class="pill"></span><span id="score" class="pill"></span></div><p><progress id="bar" max="12" value="0"></progress></p><div class="card"><p class="muted">Read the complete sentence before choosing.</p><div id="sentence" class="sentence"></div><div id="choices"></div><p id="feedback" class="feedback hidden" role="status"></p><button id="check" disabled>Check answer</button> <button id="next" class="hidden">Next round</button></div></section>
 <section id="finish" class="hidden card"><h2>Mission complete!</h2><p id="finalScore"></p><p>Take a screenshot of this result for Algebraix.</p><details><summary>Review answers and explanations</summary><div id="review"></div></details><p><button onclick="window.print()">Print or save result</button></p></section>
 </main><script>
 const questions=[["The keys under the sofa are mine.", ["under the sofa → sofa → keys", "under the sofa → under → are", "the sofa → sofa → mine"], 0, "Under the sofa describes which keys."], ["She spoke during the meeting.", ["during the meeting → during → she", "during the meeting → meeting → spoke", "the meeting → meeting → she"], 1, "During the meeting tells when she spoke."], ["The student with the blue backpack raised her hand.", ["with the blue backpack → blue → raised", "the blue backpack → backpack → hand", "with the blue backpack → backpack → student"], 2, "The phrase describes which student."], ["We waited near the library.", ["near the library → library → waited", "near the library → near → we", "the library → library → we"], 0, "The phrase tells where we waited."], ["The painting above the desk is colorful.", ["above the desk → desk → colorful", "above the desk → desk → painting", "the desk → desk → is"], 1, "The phrase describes which painting."], ["They arrived after lunch.", ["after lunch → after → they", "lunch → lunch → arrived", "after lunch → lunch → arrived"], 2, "The phrase tells when they arrived."], ["The message from my cousin made me smile.", ["from my cousin → cousin → message", "from my cousin → my → made", "my cousin → cousin → smile"], 0, "The phrase describes which message."], ["The cat slept beside the window.", ["beside the window → beside → cat", "beside the window → window → slept", "the window → window → cat"], 1, "The phrase tells where the cat slept."], ["The notebook on the shelf belongs to Leo.", ["on the shelf → shelf → belongs", "the shelf → shelf → Leo", "on the shelf → shelf → notebook"], 2, "The phrase describes which notebook."], ["We worked with great care.", ["with great care → care → worked", "with great care → great → we", "great care → care → we"], 0, "The phrase tells how we worked."], ["The road through the forest was quiet.", ["through the forest → forest → was", "through the forest → forest → road", "the forest → forest → quiet"], 1, "The phrase describes which road."], ["Mia placed the poster behind the door.", ["behind the door → behind → Mia", "the door → door → poster", "behind the door → door → placed"], 2, "The phrase tells where Mia placed the poster."]];
-let index=0,selected=-1,correct=0,answers=[],student="";
+let index=0,selected=-1,correct=0,answers=[],student="",email="";
 const $=id=>document.getElementById(id);
 function render(){
  const q=questions[index]; selected=-1;
@@ -43,8 +43,9 @@ function render(){
  $('feedback').classList.add('hidden');$('check').classList.remove('hidden');$('check').disabled=true;$('next').classList.add('hidden');
 }
 $('start').addEventListener('click',()=>{
- student=$('name').value.trim();
+ student=$('name').value.trim();email=$('email').value.trim().toLowerCase();
  if(student.length<3){$('nameError').textContent='Please enter your full name.';return}
+ if(!$('email').validity.valid || !email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){$('nameError').textContent='Please enter your school email address.';return}
  $('welcome').classList.add('hidden');$('play').classList.remove('hidden');render();
 });
 $('check').addEventListener('click',()=>{
@@ -60,7 +61,7 @@ $('check').addEventListener('click',()=>{
 $('next').addEventListener('click',()=>{
  index++;if(index<questions.length){render();return}
  $('bar').value=questions.length;$('play').classList.add('hidden');$('finish').classList.remove('hidden');
- $('finalScore').textContent=student+' · 10B · '+correct+'/'+questions.length+' · '+Math.round(correct/questions.length*100)+'%';
+ $('finalScore').textContent=student+' · '+email+' · 10B · '+correct+'/'+questions.length+' · '+Math.round(correct/questions.length*100)+'%';
  $('review').replaceChildren();
  questions.forEach((q,n)=>{
   const div=document.createElement('div');div.className='review';
