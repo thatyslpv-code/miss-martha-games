@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>7A English — Time Glitch</title>
+<style>
+:root{--accent:#6845d9;--ink:#18243e;--paper:#fff;--soft:#f1f5ff}*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at 10% 10%,#ffde67,transparent 27%),radial-gradient(circle at 90% 20%,#ff89c2,transparent 24%),linear-gradient(145deg,#8559e8,#1d9bc6);color:var(--ink);font:18px/1.45 system-ui,Arial,sans-serif}
+main{max-width:850px;margin:24px auto;padding:24px;background:var(--paper);border-radius:24px;box-shadow:0 18px 45px #28345b55}
+header{border-radius:22px;background:linear-gradient(125deg,var(--accent),#222771);color:#fff;padding:22px;display:flex;align-items:center;justify-content:space-between;gap:10px;overflow:hidden}header svg{width:190px;flex:none;filter:drop-shadow(0 10px 5px #1216504d)}small{font-weight:800;color:#ffe484;letter-spacing:.08em}
+h1{font-size:clamp(2rem,5vw,3.2rem);margin:5px 0 0}h2{font-size:1.45rem}p{margin:12px 0}
+.subtitle{color:#ffdf70;font-weight:750}.card{background:var(--soft);border-radius:18px;padding:22px;margin:20px 0;border:2px solid #dbe3fa}
+.sentence{font-size:1.35rem;font-weight:750;background:#fff;border-left:6px solid var(--accent);padding:16px;border-radius:10px;margin:18px 0}
+label{display:block;margin:8px 0;font-weight:700}input{font:inherit;padding:12px;border:2px solid #9baac4;border-radius:10px;max-width:100%;width:360px}
+button{font:inherit;cursor:pointer;border:0;border-radius:12px;padding:12px 18px;background:var(--accent);color:white;font-weight:750}
+button:disabled{opacity:.5;cursor:not-allowed}.choice{display:block;width:100%;text-align:left;background:white;color:var(--ink);border:2px solid #bcc9db;margin:10px 0;white-space:normal}
+.choice:hover,.choice:focus{border-color:var(--accent);transform:translateY(-1px)}.choice.selected{border-color:var(--accent);background:#e9e1fa;box-shadow:inset 0 0 0 2px var(--accent)}
+.choice.correct{border-color:#178451;background:#e5f8ee}.choice.wrong{border-color:#cb3f45;background:#ffeaeb}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+.muted{color:#526078}.feedback{font-weight:700;padding:12px;border-radius:10px;background:white}
+.hidden{display:none}progress{width:100%;height:15px;accent-color:var(--accent)}
+.review{border-bottom:1px solid #cbd4e0;padding:12px 0}.pill{display:inline-block;padding:5px 10px;background:#e8edf8;border-radius:100px;font-size:.85rem;font-weight:700}
+@media(max-width:600px){main{margin:0;min-height:100vh;border-radius:0;padding:16px}.card{padding:16px}.sentence{font-size:1.2rem}header svg{width:100px}header{padding:16px}}
+</style></head><body><main>
+<header><div><small>MISS MARTHA · 7A ENGLISH · SEPTEMBER 30, 2026</small><h1>Time Glitch</h1><div class="subtitle">Spot the Error</div></div><svg viewBox="0 0 260 210" role="img" aria-label="Colorful clock illustration"><circle cx="130" cy="105" r="88" fill="#ffcf52"/><circle cx="130" cy="105" r="70" fill="#fff" stroke="#3b2a80" stroke-width="8"/><path d="M130 58v48l40 24" fill="none" stroke="#f04c92" stroke-width="12" stroke-linecap="round"/><circle cx="130" cy="105" r="9" fill="#3b2a80"/><path d="m35 35 15-9m170 135 15 9M42 165l-15 10" stroke="#fff" stroke-width="9" stroke-linecap="round"/><text x="75" y="30" font-size="22" fill="#fff">✦</text><text x="205" y="65" font-size="28" fill="#fff">✦</text></svg></header>
+<section id="welcome" class="card"><h2>Mission briefing</h2><p>Read the whole sentence. Choose the best repair, or keep it when the change in time makes sense.</p><p>12 rounds · One attempt per round · Your score and corrections appear at the end.</p><label for="name">Full name</label><input id="name" autocomplete="name" placeholder="Type your full name"><p><button id="start">Start the game</button></p><p id="nameError" class="muted" role="alert"></p></section>
+<section id="play" class="hidden"><div class="row"><span id="round" class="pill"></span><span id="score" class="pill"></span></div><p><progress id="bar" max="12" value="0"></progress></p><div class="card"><p class="muted">Read the complete sentence before choosing.</p><div id="sentence" class="sentence"></div><div id="choices"></div><p id="feedback" class="feedback hidden" role="status"></p><button id="check" disabled>Check answer</button> <button id="next" class="hidden">Next round</button></div></section>
+<section id="finish" class="hidden card"><h2>Mission complete!</h2><p id="finalScore"></p><p>Take a screenshot of this result for Algebraix.</p><details><summary>Review answers and explanations</summary><div id="review"></div></details><p><button onclick="window.print()">Print or save result</button></p></section>
+</main><script>
+const questions=[["Yesterday, Emma walked to school and sees her friend.", ["Yesterday, Emma walked to school and saw her friend.", "Yesterday, Emma walks to school and saw her friend.", "Keep it as written."], 0, "Both actions happened yesterday."], ["Every morning, I eat breakfast and packed my bag.", ["Every morning, I ate breakfast and pack my bag.", "Every morning, I eat breakfast and pack my bag.", "Keep it as written."], 1, "Every morning signals a regular present action."], ["Last week, we practiced. Today, we perform.", ["Last week, we practice. Today, we perform.", "Last week, we practiced. Today, we performed.", "Keep it as written."], 2, "Last week and today justify the tense change."], ["She opened the door and looks inside.", ["She opened the door and looked inside.", "She opens the door and looked inside.", "Keep it as written."], 0, "The two actions are part of one past sequence."], ["Right now, Liam writes a note and handed it to me.", ["Right now, Liam wrote a note and handed it to me.", "Right now, Liam writes a note and hands it to me.", "Keep it as written."], 1, "Right now anchors both actions in the present."], ["Yesterday, I was tired. Now, I feel better.", ["Yesterday, I am tired. Now, I feel better.", "Yesterday, I was tired. Now, I felt better.", "Keep it as written."], 2, "Yesterday and now refer to different times."], ["The team won the game and celebrates afterward.", ["The team won the game and celebrated afterward.", "The team wins the game and celebrated afterward.", "Keep it as written."], 0, "Afterward continues the past event."], ["On Mondays, Sara studies and played basketball.", ["On Mondays, Sara studied and plays basketball.", "On Mondays, Sara studies and plays basketball.", "Keep it as written."], 1, "On Mondays describes a habit."], ["We lived in Puebla last year, but now we live in Querétaro.", ["We live in Puebla last year, but now we live in Querétaro.", "We lived in Puebla last year, but now we lived in Querétaro.", "Keep it as written."], 2, "Last year and now justify different tenses."], ["The dog barked, ran outside, and chases the ball.", ["The dog barked, ran outside, and chased the ball.", "The dog barks, ran outside, and chased the ball.", "Keep it as written."], 0, "All three actions happened in the same past sequence."], ["Today, we discuss the story. Tomorrow, we will write a review.", ["Today, we discussed the story. Tomorrow, we will write a review.", "Today, we discuss the story. Tomorrow, we wrote a review.", "Keep it as written."], 2, "Today and tomorrow justify the change."], ["Every Friday, my friends meet and talked after class.", ["Every Friday, my friends met and talk after class.", "Every Friday, my friends meet and talk after class.", "Keep it as written."], 1, "Every Friday describes a repeated present habit."]];
+let index=0,selected=-1,correct=0,answers=[],student="";
+const $=id=>document.getElementById(id);
+function render(){
+ const q=questions[index]; selected=-1;
+ $('round').textContent='Round '+(index+1)+' of '+questions.length;
+ $('score').textContent='Correct: '+correct;
+ $('bar').value=index;
+ $('sentence').textContent=q[0];
+ $('choices').replaceChildren();
+ q[1].forEach((option,n)=>{
+  const b=document.createElement('button');b.className='choice';b.type='button';b.textContent=option;
+  b.addEventListener('click',()=>{selected=n;document.querySelectorAll('.choice').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');$('check').disabled=false});
+  $('choices').append(b);
+ });
+ $('feedback').classList.add('hidden');$('check').classList.remove('hidden');$('check').disabled=true;$('next').classList.add('hidden');
+}
+$('start').addEventListener('click',()=>{
+ student=$('name').value.trim();
+ if(student.length<3){$('nameError').textContent='Please enter your full name.';return}
+ $('welcome').classList.add('hidden');$('play').classList.remove('hidden');render();
+});
+$('check').addEventListener('click',()=>{
+ if(selected<0)return;
+ const q=questions[index],ok=selected===q[2];if(ok)correct++;
+ answers.push(selected);
+ document.querySelectorAll('.choice').forEach((b,n)=>{b.disabled=true;if(n===q[2])b.classList.add('correct');else if(n===selected)b.classList.add('wrong')});
+ $('feedback').textContent=(ok?'Correct! ':'Try this: ')+q[3];
+ $('feedback').classList.remove('hidden');$('check').classList.add('hidden');$('next').classList.remove('hidden');
+ $('next').textContent=index===questions.length-1?'See my result':'Next round';
+ $('score').textContent='Correct: '+correct;
+});
+$('next').addEventListener('click',()=>{
+ index++;if(index<questions.length){render();return}
+ $('bar').value=questions.length;$('play').classList.add('hidden');$('finish').classList.remove('hidden');
+ $('finalScore').textContent=student+' · 7A · '+correct+'/'+questions.length+' · '+Math.round(correct/questions.length*100)+'%';
+ $('review').replaceChildren();
+ questions.forEach((q,n)=>{
+  const div=document.createElement('div');div.className='review';
+  const heading=document.createElement('strong');heading.textContent=(n+1)+'. '+q[0];
+  const line=document.createElement('p');line.textContent=(answers[n]===q[2]?'✓ Correct':'✗ Your choice: '+q[1][answers[n]])+' | Answer: '+q[1][q[2]];
+  const why=document.createElement('p');why.textContent=q[3];div.append(heading,line,why);$('review').append(div);
+ });
+});
+</script></body></html>
