@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>10B English — Detail Detectives</title>
+<style>
+:root{--accent:#b65309;--ink:#18243e;--paper:#fff;--soft:#f1f5ff}*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at 10% 10%,#ffde67,transparent 27%),radial-gradient(circle at 90% 20%,#ff89c2,transparent 24%),linear-gradient(145deg,#8559e8,#1d9bc6);color:var(--ink);font:18px/1.45 system-ui,Arial,sans-serif}
+main{max-width:850px;margin:24px auto;padding:24px;background:var(--paper);border-radius:24px;box-shadow:0 18px 45px #28345b55}
+header{border-radius:22px;background:linear-gradient(125deg,var(--accent),#222771);color:#fff;padding:22px;display:flex;align-items:center;justify-content:space-between;gap:10px;overflow:hidden}header svg{width:190px;flex:none;filter:drop-shadow(0 10px 5px #1216504d)}small{font-weight:800;color:#ffe484;letter-spacing:.08em}
+h1{font-size:clamp(2rem,5vw,3.2rem);margin:5px 0 0}h2{font-size:1.45rem}p{margin:12px 0}
+.subtitle{color:#ffdf70;font-weight:750}.card{background:var(--soft);border-radius:18px;padding:22px;margin:20px 0;border:2px solid #dbe3fa}
+.sentence{font-size:1.35rem;font-weight:750;background:#fff;border-left:6px solid var(--accent);padding:16px;border-radius:10px;margin:18px 0}
+label{display:block;margin:8px 0;font-weight:700}input{font:inherit;padding:12px;border:2px solid #9baac4;border-radius:10px;max-width:100%;width:360px}
+button{font:inherit;cursor:pointer;border:0;border-radius:12px;padding:12px 18px;background:var(--accent);color:white;font-weight:750}
+button:disabled{opacity:.5;cursor:not-allowed}.choice{display:block;width:100%;text-align:left;background:white;color:var(--ink);border:2px solid #bcc9db;margin:10px 0;white-space:normal}
+.choice:hover,.choice:focus{border-color:var(--accent);transform:translateY(-1px)}.choice.selected{border-color:var(--accent);background:#e9e1fa;box-shadow:inset 0 0 0 2px var(--accent)}
+.choice.correct{border-color:#178451;background:#e5f8ee}.choice.wrong{border-color:#cb3f45;background:#ffeaeb}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+.muted{color:#526078}.feedback{font-weight:700;padding:12px;border-radius:10px;background:white}
+.hidden{display:none}progress{width:100%;height:15px;accent-color:var(--accent)}
+.review{border-bottom:1px solid #cbd4e0;padding:12px 0}.pill{display:inline-block;padding:5px 10px;background:#e8edf8;border-radius:100px;font-size:.85rem;font-weight:700}
+@media(max-width:600px){main{margin:0;min-height:100vh;border-radius:0;padding:16px}.card{padding:16px}.sentence{font-size:1.2rem}header svg{width:100px}header{padding:16px}}
+</style></head><body><main>
+<header><div><small>MISS MARTHA · 10B ENGLISH · SEPTEMBER 30, 2026</small><h1>Detail Detectives</h1><div class="subtitle">Matching Pairs</div></div><svg viewBox="0 0 260 210" role="img" aria-label="Magnifying glass over a phrase"><rect x="30" y="48" width="192" height="112" rx="18" fill="#fff" stroke="#743c20" stroke-width="6"/><path d="M55 80h138M55 105h115M55 130h125" stroke="#f2a13a" stroke-width="10" stroke-linecap="round"/><circle cx="150" cy="103" r="49" fill="#8be0ec99" stroke="#274f8b" stroke-width="11"/><path d="m184 138 48 50" stroke="#274f8b" stroke-width="19" stroke-linecap="round"/><path d="M112 119h65" stroke="#ec518f" stroke-width="8" stroke-linecap="round"/></svg></header>
+<section id="welcome" class="card"><h2>Mission briefing</h2><p>Read the full sentence. Match the complete prepositional phrase with its object and the word it modifies.</p><p>12 rounds · One attempt per round · Your score and corrections appear at the end.</p><label for="name">Full name</label><input id="name" autocomplete="name" placeholder="Type your full name"><p><button id="start">Start the game</button></p><p id="nameError" class="muted" role="alert"></p></section>
+<section id="play" class="hidden"><div class="row"><span id="round" class="pill"></span><span id="score" class="pill"></span></div><p><progress id="bar" max="12" value="0"></progress></p><div class="card"><p class="muted">Read the complete sentence before choosing.</p><div id="sentence" class="sentence"></div><div id="choices"></div><p id="feedback" class="feedback hidden" role="status"></p><button id="check" disabled>Check answer</button> <button id="next" class="hidden">Next round</button></div></section>
+<section id="finish" class="hidden card"><h2>Mission complete!</h2><p id="finalScore"></p><p>Take a screenshot of this result for Algebraix.</p><details><summary>Review answers and explanations</summary><div id="review"></div></details><p><button onclick="window.print()">Print or save result</button></p></section>
+</main><script>
+const questions=[["The keys under the sofa are mine.", ["under the sofa → sofa → keys", "under the sofa → under → are", "the sofa → sofa → mine"], 0, "Under the sofa describes which keys."], ["She spoke during the meeting.", ["during the meeting → during → she", "during the meeting → meeting → spoke", "the meeting → meeting → she"], 1, "During the meeting tells when she spoke."], ["The student with the blue backpack raised her hand.", ["with the blue backpack → blue → raised", "the blue backpack → backpack → hand", "with the blue backpack → backpack → student"], 2, "The phrase describes which student."], ["We waited near the library.", ["near the library → library → waited", "near the library → near → we", "the library → library → we"], 0, "The phrase tells where we waited."], ["The painting above the desk is colorful.", ["above the desk → desk → colorful", "above the desk → desk → painting", "the desk → desk → is"], 1, "The phrase describes which painting."], ["They arrived after lunch.", ["after lunch → after → they", "lunch → lunch → arrived", "after lunch → lunch → arrived"], 2, "The phrase tells when they arrived."], ["The message from my cousin made me smile.", ["from my cousin → cousin → message", "from my cousin → my → made", "my cousin → cousin → smile"], 0, "The phrase describes which message."], ["The cat slept beside the window.", ["beside the window → beside → cat", "beside the window → window → slept", "the window → window → cat"], 1, "The phrase tells where the cat slept."], ["The notebook on the shelf belongs to Leo.", ["on the shelf → shelf → belongs", "the shelf → shelf → Leo", "on the shelf → shelf → notebook"], 2, "The phrase describes which notebook."], ["We worked with great care.", ["with great care → care → worked", "with great care → great → we", "great care → care → we"], 0, "The phrase tells how we worked."], ["The road through the forest was quiet.", ["through the forest → forest → was", "through the forest → forest → road", "the forest → forest → quiet"], 1, "The phrase describes which road."], ["Mia placed the poster behind the door.", ["behind the door → behind → Mia", "the door → door → poster", "behind the door → door → placed"], 2, "The phrase tells where Mia placed the poster."]];
+let index=0,selected=-1,correct=0,answers=[],student="";
+const $=id=>document.getElementById(id);
+function render(){
+ const q=questions[index]; selected=-1;
+ $('round').textContent='Round '+(index+1)+' of '+questions.length;
+ $('score').textContent='Correct: '+correct;
+ $('bar').value=index;
+ $('sentence').textContent=q[0];
+ $('choices').replaceChildren();
+ q[1].forEach((option,n)=>{
+  const b=document.createElement('button');b.className='choice';b.type='button';b.textContent=option;
+  b.addEventListener('click',()=>{selected=n;document.querySelectorAll('.choice').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');$('check').disabled=false});
+  $('choices').append(b);
+ });
+ $('feedback').classList.add('hidden');$('check').classList.remove('hidden');$('check').disabled=true;$('next').classList.add('hidden');
+}
+$('start').addEventListener('click',()=>{
+ student=$('name').value.trim();
+ if(student.length<3){$('nameError').textContent='Please enter your full name.';return}
+ $('welcome').classList.add('hidden');$('play').classList.remove('hidden');render();
+});
+$('check').addEventListener('click',()=>{
+ if(selected<0)return;
+ const q=questions[index],ok=selected===q[2];if(ok)correct++;
+ answers.push(selected);
+ document.querySelectorAll('.choice').forEach((b,n)=>{b.disabled=true;if(n===q[2])b.classList.add('correct');else if(n===selected)b.classList.add('wrong')});
+ $('feedback').textContent=(ok?'Correct! ':'Try this: ')+q[3];
+ $('feedback').classList.remove('hidden');$('check').classList.add('hidden');$('next').classList.remove('hidden');
+ $('next').textContent=index===questions.length-1?'See my result':'Next round';
+ $('score').textContent='Correct: '+correct;
+});
+$('next').addEventListener('click',()=>{
+ index++;if(index<questions.length){render();return}
+ $('bar').value=questions.length;$('play').classList.add('hidden');$('finish').classList.remove('hidden');
+ $('finalScore').textContent=student+' · 10B · '+correct+'/'+questions.length+' · '+Math.round(correct/questions.length*100)+'%';
+ $('review').replaceChildren();
+ questions.forEach((q,n)=>{
+  const div=document.createElement('div');div.className='review';
+  const heading=document.createElement('strong');heading.textContent=(n+1)+'. '+q[0];
+  const line=document.createElement('p');line.textContent=(answers[n]===q[2]?'✓ Correct':'✗ Your choice: '+q[1][answers[n]])+' | Answer: '+q[1][q[2]];
+  const why=document.createElement('p');why.textContent=q[3];div.append(heading,line,why);$('review').append(div);
+ });
+});
+</script></body></html>
