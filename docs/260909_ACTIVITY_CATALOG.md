@@ -52,3 +52,16 @@ Este documento reúne las actividades interactivas y recursos de clase que se pu
 | 261012 | 10A English | ColonCraft · U2 Ch6 · Using Colons | [Student](https://thatyslpv-code.github.io/miss-martha-games/261012_10A_English_ColonCraft_Clase_2_student.html) | [Teacher y respuestas](https://thatyslpv-code.github.io/miss-martha-games/261012_10A_English_ColonCraft_Clase_2_teacher.html) | Captura de resultado; sin envío automático conectado en esta actualización |
 
 Las claves privadas no se publican en GitHub. Actividades disponibles; su registro no confirma que se hayan aplicado en clase.
+
+### Juegos recuperados e integrados en Miss Martha’s Lab · Unit 1
+
+| Grado / materia | Juego | Student | Teacher |
+|---|---|---|---|
+| 7th English | TenseCraft · Consistent Verb Tenses | [Abrir](https://thatyslpv-code.github.io/miss-martha-games/261002_7A_English_TenseCraft_student.html) | [Respuestas](https://thatyslpv-code.github.io/miss-martha-games/261002_7A_English_TenseCraft_teacher.html) |
+| 8th English | QuoteCraft · Punctuation When Quoting Sources | [Abrir](https://thatyslpv-code.github.io/miss-martha-games/261002_8A_English_QuoteCraft_student.html) | [Respuestas](https://thatyslpv-code.github.io/miss-martha-games/261002_8A_English_QuoteCraft_teacher.html) |
+| 9th English | VoiceCraft · Active and Passive Voice | [Abrir](https://thatyslpv-code.github.io/miss-martha-games/261002_9A_English_VoiceCraft_student.html) | [Respuestas](https://thatyslpv-code.github.io/miss-martha-games/261002_9A_English_VoiceCraft_teacher.html) |
+| 10th English | Foreign Words: Baggage Claim · Foreign Words | [Abrir](https://thatyslpv-code.github.io/miss-martha-games/260922_10th_English_Foreign_Words_Baggage_Claim_student.html) | [Respuestas](https://thatyslpv-code.github.io/miss-martha-games/260922_10th_English_Foreign_Words_Baggage_Claim_teacher.html) |
+| 10th MUN | Amendment Surgery · Resolution and Operative Clause Repair | [Abrir](https://thatyslpv-code.github.io/miss-martha-games/260929_10A_MUN_Amendment_Surgery_student.html) | Sin versión Teacher separada |
+| 10th English | Detail Detectives · Prepositional Phrases | [Abrir](https://thatyslpv-code.github.io/miss-martha-games/260930_10B_English_Detail_Detectives_student.html) | Sin versión Teacher separada |
+
+Portal: https://miss-martha-learning-hub.thatys.chatgpt.site · Selector Unit 2 (actual), Unit 1 (repaso), All units. La disponibilidad no confirma aplicación en clase.
