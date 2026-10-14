@@ -1,0 +1,15 @@
+const headers={'Access-Control-Allow-Origin':'https://thatyslpv-code.github.io','Access-Control-Allow-Headers':'authorization,apikey,content-type','Access-Control-Allow-Methods':'POST,OPTIONS','Content-Type':'application/json','Cache-Control':'no-store'};
+const keyHash='c2393f3534a3d6e2b98f6c77635cbcb21973754a398c78d2cdcb9d5d7a041f70';
+const answers=[["untie"],["repack"],["unsafe"],["misprint"],["disconnect"],["preheat"],["fearless"],["joyful"],["re"],["pre"],["ness"],["able"],["un","lock","ed"],["re","pack","ed"],["dis","trust","ful"],["un","fair","ness"],["pre","pay","ment"],["again"],["noise"],["washed"]];
+const norm=(s)=>s.trim().toLowerCase().replace(/[‐‑–—-]/g,'').replace(/\s+/g,' ');
+async function hash(s){return Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s)))).map(x=>x.toString(16).padStart(2,'0')).join('')}
+Deno.serve(async(req)=>{if(req.method==='OPTIONS')return new Response(null,{headers});const reply=(data,status=200)=>new Response(JSON.stringify(data),{status,headers});if(req.method!=='POST')return reply({error:'POST required'},405);
+try{const b=await req.json();const url=Deno.env.get('SUPABASE_URL')+'/rest/v1/wordcraft_results';const secret=Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');const dbheaders={apikey:secret,Authorization:'Bearer '+secret,'Content-Type':'application/json'};
+if(b.action==='list'){if(typeof b.code!=='string'||b.code.length>100||await hash(b.code)!==keyHash)return reply({error:'Incorrect teacher code'},403);const r=await fetch(url+'?select=attempt_id,student_name,student_group,score,correct,elapsed_seconds,created_at&order=created_at.desc&limit=1000',{headers:dbheaders});if(!r.ok)return reply({error:'Results unavailable. Try again.'},503);return reply({results:await r.json()});}
+if(b.action!=='submit')return reply({error:'Invalid action'},400);
+if(typeof b.name!=='string'||b.name.trim().length<3||b.name.length>70||b.group!=='8A'||!Array.isArray(b.responses)||b.responses.length!==20||!Number.isInteger(b.elapsed)||b.elapsed<0||b.elapsed>86400||typeof b.attempt_id!=='string'||!/^[0-9a-f-]{36}$/.test(b.attempt_id))return reply({error:'Invalid result'},400);
+if(!b.responses.every((a,i)=>Array.isArray(a)&&a.length===answers[i].length&&a.every(v=>typeof v==='string'&&v.length<=40)))return reply({error:'Invalid answers'},400);
+const correct=b.responses.filter((a,i)=>a.every((v,j)=>norm(v)===norm(answers[i][j]))).length;
+const row={attempt_id:b.attempt_id,student_name:b.name.trim(),student_group:'8A',score:correct*5,correct,elapsed_seconds:b.elapsed};
+const r=await fetch(url+'?on_conflict=attempt_id',{method:'POST',headers:{...dbheaders,Prefer:'resolution=ignore-duplicates,return=minimal'},body:JSON.stringify(row)});if(!r.ok)return reply({error:'Could not save. Please retry.'},503);return reply({saved:true,score:row.score});
+}catch{return reply({error:'Request could not be processed'},400)}});
