@@ -43,3 +43,12 @@ Este documento reúne las actividades interactivas y recursos de clase que se pu
 - Alternativa imprimible para estudiantes sin computadora.
 - Respuestas de opción múltiple distribuidas; evitar que todas sean la misma letra.
 - En MUN, incluir reflexión final acorde al grado.
+
+## Actualización · 14 de octubre de 2026
+
+| Fecha | Grupo / materia | Actividad | Alumnos | Miss Martha | Calificaciones |
+|---|---|---|---|---|---|
+| 261013 | 8A English | WordCraft · U2 Ch6 · Roots, Prefixes and Suffixes | [Student](https://thatyslpv-code.github.io/miss-martha-games/261013_8A_English_WordCraft_Clase_2_student.html) | [Teacher y respuestas](https://thatyslpv-code.github.io/miss-martha-games/261013_8A_English_WordCraft_Clase_2_teacher.html) | [Panel privado](https://thatyslpv-code.github.io/miss-martha-games/261013_8A_English_WordCraft_Clase_2_teacher.html#gradesPanel): envío al terminar desde la actualización 261014; clave privada; CSV para Excel |
+| 261012 | 10A English | ColonCraft · U2 Ch6 · Using Colons | [Student](https://thatyslpv-code.github.io/miss-martha-games/261012_10A_English_ColonCraft_Clase_2_student.html) | [Teacher y respuestas](https://thatyslpv-code.github.io/miss-martha-games/261012_10A_English_ColonCraft_Clase_2_teacher.html) | Captura de resultado; sin envío automático conectado en esta actualización |
+
+Las claves privadas no se publican en GitHub. Actividades disponibles; su registro no confirma que se hayan aplicado en clase.
