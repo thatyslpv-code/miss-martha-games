@@ -1,0 +1,458 @@
+{
+  "261020_9A_parallel": {
+    "group": "9A",
+    "title": "Parallel Structure \u00b7 Boss Battle",
+    "tasks": [
+      {
+        "prompt": "Choose the sentence with the most consistent parallel pattern.",
+        "options": [
+          "The drummer enjoys composing beats, mixing tracks, and to perform live.",
+          "The drummer enjoys composing beats, mixing tracks, and performing live."
+        ],
+        "answer": 1,
+        "why": "The three activities use matching -ing forms."
+      },
+      {
+        "prompt": "Choose the sentence with the most consistent parallel pattern.",
+        "options": [
+          "The robotics club hopes to design a rover, to test its sensors, and entering a contest.",
+          "The robotics club hopes to design a rover, to test its sensors, and to enter a contest."
+        ],
+        "answer": 1,
+        "why": "All three goals use infinitives."
+      },
+      {
+        "prompt": "Choose the sentence with the most consistent parallel pattern.",
+        "options": [
+          "The goalkeeper was alert, agile, and showed courage.",
+          "The goalkeeper was alert, agile, and courageous."
+        ],
+        "answer": 1,
+        "why": "All three descriptions are adjectives."
+      },
+      {
+        "prompt": "Choose the sentence with the most consistent parallel pattern.",
+        "options": [
+          "The detective examined the lock, photographed the footprints, and was interviewing the witness.",
+          "The detective examined the lock, photographed the footprints, and interviewed the witness."
+        ],
+        "answer": 1,
+        "why": "The coordinated actions follow the same simple-past pattern."
+      },
+      {
+        "prompt": "Choose the sentence with the most consistent parallel pattern.",
+        "options": [
+          "The recipe requires precision, patience, and being creative.",
+          "The recipe requires precision, patience, and creativity."
+        ],
+        "answer": 1,
+        "why": "The three qualities are nouns."
+      },
+      {
+        "prompt": "Choose the sentence with the most consistent parallel pattern.",
+        "options": [
+          "The app allows users to crop photos, to adjust colors, and adding stickers.",
+          "The app allows users to crop photos, to adjust colors, and to add stickers."
+        ],
+        "answer": 1,
+        "why": "Match to + base verb for each action."
+      },
+      {
+        "prompt": "Choose the sentence with the most consistent parallel pattern.",
+        "options": [
+          "The gymnast landed gracefully, moved confidently, and smiled with pride.",
+          "The gymnast landed gracefully, moved confidently, and smiled proudly."
+        ],
+        "answer": 1,
+        "why": "The revised sentence consistently pairs each action with an adverb."
+      },
+      {
+        "prompt": "Choose the sentence with the most consistent parallel pattern.",
+        "options": [
+          "Our podcast focuses on exploring mysteries, interviewing experts, and to explain discoveries.",
+          "Our podcast focuses on exploring mysteries, interviewing experts, and explaining discoveries."
+        ],
+        "answer": 1,
+        "why": "Use three -ing phrases after focuses on."
+      },
+      {
+        "prompt": "Choose the sentence with the most consistent parallel pattern.",
+        "options": [
+          "The game rewards teamwork, accuracy, and being persistent.",
+          "The game rewards teamwork, accuracy, and persistence."
+        ],
+        "answer": 1,
+        "why": "All three rewarded qualities are nouns."
+      },
+      {
+        "prompt": "Choose the sentence with the most consistent parallel pattern.",
+        "options": [
+          "The astronaut trained to repair equipment, to navigate the capsule, and that she would handle emergencies.",
+          "The astronaut trained to repair equipment, to navigate the capsule, and to handle emergencies."
+        ],
+        "answer": 1,
+        "why": "Use parallel infinitive phrases."
+      },
+      {
+        "prompt": "Build the sentence. Keep the listed events or items in the order shown by the sentence logic.",
+        "parts": [
+          "The camera drone",
+          "rose above the stadium,",
+          "circled the scoreboard,",
+          "and landed beside the coach."
+        ],
+        "why": "Three simple-past verb phrases describe the drone."
+      },
+      {
+        "prompt": "Build the sentence. Keep the listed events or items in the order shown by the sentence logic.",
+        "parts": [
+          "The puzzle requires",
+          "spotting hidden symbols,",
+          "comparing secret messages,",
+          "and decoding the final clue."
+        ],
+        "why": "Three -ing phrases name the required activities."
+      },
+      {
+        "prompt": "Build the sentence. Keep the listed events or items in the order shown by the sentence logic.",
+        "parts": [
+          "The band hopes",
+          "to record an album,",
+          "to film a video,",
+          "and to organize a concert."
+        ],
+        "why": "Three infinitive phrases express hopes."
+      },
+      {
+        "prompt": "Build the sentence. Keep the listed events or items in the order shown by the sentence logic.",
+        "parts": [
+          "The survival kit contains",
+          "a waterproof flashlight,",
+          "a folded map,",
+          "and a portable charger."
+        ],
+        "why": "Three noun phrases name objects in the kit."
+      },
+      {
+        "prompt": "Build the sentence. Keep the listed events or items in the order shown by the sentence logic.",
+        "parts": [
+          "The mystery game feels",
+          "unpredictable,",
+          "challenging,",
+          "and surprisingly realistic."
+        ],
+        "why": "Three adjective phrases describe the game."
+      },
+      {
+        "prompt": "Choose three parallel -ing activities for a music studio.",
+        "options": [
+          "recording vocals, editing tracks, and balancing sound",
+          "recording vocals, to edit tracks, and balanced sound",
+          "to record vocals, editing tracks, and balance sound"
+        ],
+        "answer": 0,
+        "why": "Match the three -ing activities."
+      },
+      {
+        "prompt": "Choose three parallel descriptions of a superhero.",
+        "options": [
+          "brave, has strength, and inventive",
+          "brave, strong, and inventive",
+          "bravely, strong, and invention"
+        ],
+        "answer": 1,
+        "why": "Use three adjectives."
+      },
+      {
+        "prompt": "Complete the tournament plan: We intend ...",
+        "options": [
+          "to select teams, testing equipment, and rules",
+          "selecting teams, to test equipment, and announce rules",
+          "to select teams, to test equipment, and to announce rules"
+        ],
+        "answer": 2,
+        "why": "Use three infinitive phrases."
+      },
+      {
+        "prompt": "Repair: The science fair needs organization, imagination, and to cooperate.",
+        "options": [
+          "The science fair needs organization, imagination, and cooperation.",
+          "The science fair needs organized, imagination, and cooperation.",
+          "The science fair needs organizing, imagination, and to cooperate."
+        ],
+        "answer": 0,
+        "why": "Use three nouns."
+      },
+      {
+        "prompt": "BOSS: Which mystery report contains two parallel lists?",
+        "options": [
+          "The case involves a lock, a key, and searching. The detective inspected, questioned, and recovered the trophy.",
+          "The case involves a lock, a key, and a glove. The detective inspected the cabinet, questioned the captain, and recovered the trophy.",
+          "The case involves a lock, a key, and a glove. The detective inspected the cabinet, questioning the captain, and to recover the trophy."
+        ],
+        "answer": 1,
+        "why": "The first list uses nouns; the second uses simple-past verb phrases."
+      }
+    ],
+    "extras": [
+      {
+        "prompt": "EXTRA: Repair: The new phone is not only a camera but also stores documents.",
+        "model": "The new phone is not only a camera but also a document storage device.",
+        "why": "Balance noun phrases after not only and but also."
+      },
+      {
+        "prompt": "EXTRA: Write about a skateboarder using both ... and with two -ing forms.",
+        "model": "The skateboarder enjoys both practicing tricks and filming tutorials.",
+        "why": "Use matching forms on both sides of and."
+      },
+      {
+        "prompt": "EXTRA: Write a travel decision using either ... or and two infinitive phrases.",
+        "model": "We decided either to board the ferry or to rent bicycles.",
+        "why": "Match the grammatical forms of the two alternatives."
+      },
+      {
+        "prompt": "EXTRA: Write a nonparallel sentence about a concert, then repair it.",
+        "model": "Wrong: The concert offered dancing, singing, and to meet artists. Repair: The concert offered dancing, singing, and meeting artists.",
+        "why": "Explain the mismatched form and your repair."
+      },
+      {
+        "prompt": "EXTRA: Write a three-sentence advertisement for a futuristic museum. Include two parallel lists.",
+        "model": "Explore glowing exhibits, interactive walls, and virtual worlds. You can build a robot, solve a mystery, and pilot a spacecraft. Book your adventure today.",
+        "why": "Check that each list follows a single grammatical pattern."
+      }
+    ]
+  },
+  "261020_10A_semicolons": {
+    "group": "10A",
+    "title": "Semicolon Escape \u00b7 Punctuation Lab",
+    "tasks": [
+      {
+        "prompt": "The headphones stopped working the gamer switched to speakers.",
+        "options": [
+          "The headphones stopped working; the gamer switched to speakers.",
+          "The headphones stopped; working the gamer switched to speakers.",
+          "The headphones stopped working; switching to speakers."
+        ],
+        "answer": 0,
+        "why": "Each side of the correct semicolon is an independent clause."
+      },
+      {
+        "prompt": "The telescope was expensive however the astronomy club bought it.",
+        "options": [
+          "The telescope was expensive, however the astronomy club bought it.",
+          "The telescope was expensive; however, the astronomy club bought it.",
+          "The telescope was expensive; however the astronomy club bought it."
+        ],
+        "answer": 1,
+        "why": "Use ; however, between two complete clauses."
+      },
+      {
+        "prompt": "Our playlist features Sol, a jazz singer Nico, a drummer and Eva, a violinist.",
+        "options": [
+          "Our playlist features Sol; a jazz singer, Nico; a drummer, and Eva; a violinist.",
+          "Our playlist features Sol, a jazz singer; Nico, a drummer; and Eva, a violinist.",
+          "Our playlist features; Sol, a jazz singer, Nico, a drummer, and Eva, a violinist."
+        ],
+        "answer": 1,
+        "why": "Semicolons separate the whole name-and-role items."
+      },
+      {
+        "prompt": "When the power returned; the scoreboard lit up.",
+        "options": [
+          "When the power returned, the scoreboard lit up.",
+          "When the power; returned the scoreboard lit up.",
+          "When the power returned; the scoreboard lit up."
+        ],
+        "answer": 0,
+        "why": "The opening when-clause is dependent and takes a comma."
+      },
+      {
+        "prompt": "The climber reached the summit; exhausted but delighted.",
+        "options": [
+          "The climber reached the summit; exhausted but delighted.",
+          "The climber reached the summit, exhausted but delighted.",
+          "The climber; reached the summit, exhausted but delighted."
+        ],
+        "answer": 1,
+        "why": "Exhausted but delighted is not an independent clause."
+      },
+      {
+        "prompt": "The hard drive was damaged therefore the files were unavailable.",
+        "options": [
+          "The hard drive was damaged; therefore, the files were unavailable.",
+          "The hard drive was damaged, therefore the files were unavailable.",
+          "The hard drive was damaged; therefore the files were unavailable."
+        ],
+        "answer": 0,
+        "why": "Therefore links independent clauses with a semicolon before it and a comma after it."
+      },
+      {
+        "prompt": "Which sentence correctly connects two complete clauses?",
+        "options": [
+          "The artist selected; blue and silver paint.",
+          "The printer jammed; the technician cleared the paper.",
+          "Unless the train arrives; we will walk."
+        ],
+        "answer": 1,
+        "why": "Both sides of the correct semicolon can stand alone."
+      },
+      {
+        "prompt": "Which sentence correctly separates complex list items?",
+        "options": [
+          "The capsule landed; the crew cheered.",
+          "The kit contains a lens, wrapped in cloth; a battery, sealed in plastic; and a cable, tied with string.",
+          "The kit contains; a lens, a battery, and a cable."
+        ],
+        "answer": 1,
+        "why": "Each object includes an internal comma, so semicolons mark whole items."
+      },
+      {
+        "prompt": "The costume needs three accessories a mask, gloves, and boots.",
+        "options": [
+          "The costume needs three accessories; a mask, gloves, and boots.",
+          "The costume needs three accessories: a mask, gloves, and boots.",
+          "The costume needs; three accessories a mask, gloves, and boots."
+        ],
+        "answer": 1,
+        "why": "A colon introduces a list after a complete clause."
+      },
+      {
+        "prompt": "Choose the correct punctuation.",
+        "options": [
+          "The trail was icy; nevertheless, the hikers continued.",
+          "The trail was icy, nevertheless the hikers continued.",
+          "The trail was icy; nevertheless the hikers continued."
+        ],
+        "answer": 0,
+        "why": "Use ; nevertheless, between independent clauses."
+      },
+      {
+        "prompt": "Repair without changing the words: The password expired the user created a new one.",
+        "options": [
+          "The password expired; the user created a new one.",
+          "The password; expired the user created a new one.",
+          "The password expired; created a new one."
+        ],
+        "answer": 0,
+        "why": "Join the two closely related independent clauses at their boundary."
+      },
+      {
+        "prompt": "Choose the correct museum itinerary.",
+        "options": [
+          "We toured the Fossil Hall, on level one; the Space Gallery, on level two; and the Robot Lab, on level three.",
+          "We toured the Fossil Hall; on level one, the Space Gallery; on level two, and the Robot Lab; on level three.",
+          "We toured; the Fossil Hall, on level one, the Space Gallery, on level two, and the Robot Lab, on level three."
+        ],
+        "answer": 0,
+        "why": "Keep each gallery and its location together as one list item."
+      },
+      {
+        "prompt": "Since the sensor was broken; the robot missed the obstacle.",
+        "options": [
+          "Since the sensor was broken, the robot missed the obstacle.",
+          "Since the sensor was broken; the robot missed the obstacle.",
+          "Since; the sensor was broken, the robot missed the obstacle."
+        ],
+        "answer": 0,
+        "why": "Since makes the first clause dependent."
+      },
+      {
+        "prompt": "The mural was colorful moreover it covered the entire wall.",
+        "options": [
+          "The mural was colorful; moreover, it covered the entire wall.",
+          "The mural was colorful, moreover it covered the entire wall.",
+          "The mural was colorful; moreover it covered the entire wall."
+        ],
+        "answer": 0,
+        "why": "Moreover takes a preceding semicolon and a following comma when linking independent clauses."
+      },
+      {
+        "prompt": "Which semicolon is correct?",
+        "options": [
+          "The cat hid; beneath the sofa.",
+          "The cat knocked over the vase; the dog ran outside.",
+          "The cat; knocked over the vase."
+        ],
+        "answer": 1,
+        "why": "The correct semicolon connects two complete clauses."
+      },
+      {
+        "prompt": "Repair: The battery was charged however the camera would not start.",
+        "options": [
+          "The battery was charged; however, the camera would not start.",
+          "The battery was charged, however the camera would not start.",
+          "The battery was charged; however the camera would not start."
+        ],
+        "answer": 0,
+        "why": "Place ; before however and a comma after it."
+      },
+      {
+        "prompt": "Which cooking sentence joins two independent clauses?",
+        "options": [
+          "The chef decorated; the cake with berries.",
+          "When the timer rang; the chef smiled.",
+          "The timer rang; the chef removed the cake."
+        ],
+        "answer": 2,
+        "why": "Both clauses contain a subject and a finite verb."
+      },
+      {
+        "prompt": "Which technology sentence uses therefore correctly?",
+        "options": [
+          "The app crashed, therefore the developer released a patch.",
+          "The app crashed; therefore, the developer released a patch.",
+          "The app crashed; therefore the developer released a patch."
+        ],
+        "answer": 1,
+        "why": "Use ; therefore, between two independent clauses."
+      },
+      {
+        "prompt": "Choose the properly punctuated invention display.",
+        "options": [
+          "The display includes SkyStep, a floating board; DreamLens, a recording mask; and EchoPen, a talking stylus.",
+          "The display includes; SkyStep, a floating board, DreamLens, a recording mask, and EchoPen, a talking stylus.",
+          "The display includes SkyStep; a floating board, DreamLens; a recording mask, and EchoPen; a talking stylus."
+        ],
+        "answer": 0,
+        "why": "Separate whole name-description pairs with semicolons."
+      },
+      {
+        "prompt": "FINAL LOCK: Which report uses both semicolon rules correctly?",
+        "options": [
+          "The alarm rang; the guard ran upstairs. Evidence included a glove, covered in dust; a necklace, hidden under a chair; and a note, written in blue ink.",
+          "The alarm rang; running upstairs. Evidence included a glove, covered in dust; a necklace, hidden under a chair; and a note, written in blue ink.",
+          "The alarm rang; the guard ran upstairs. Evidence included; a glove, a necklace, and a note."
+        ],
+        "answer": 0,
+        "why": "The first semicolon joins independent clauses; the list semicolons separate complex items."
+      }
+    ],
+    "extras": [
+      {
+        "prompt": "EXTRA: Repair and explain: The baker mixed; flour and sugar.",
+        "model": "The baker mixed flour and sugar.",
+        "why": "Do not separate the verb from its direct object with a semicolon."
+      },
+      {
+        "prompt": "EXTRA: Write a sports sentence using ; nevertheless, .",
+        "model": "The runner lost a shoe; nevertheless, she finished the race.",
+        "why": "Both sides must be independent clauses."
+      },
+      {
+        "prompt": "EXTRA: Give two valid repairs: The elevator stopped the passengers pressed the alarm.",
+        "model": "The elevator stopped; the passengers pressed the alarm. / The elevator stopped. The passengers pressed the alarm.",
+        "why": "A semicolon and a period are both valid boundaries here."
+      },
+      {
+        "prompt": "EXTRA: Create and repair a semicolon error about a video game.",
+        "model": "Wrong: After the dragon vanished; the gate opened. Repair: After the dragon vanished, the gate opened.",
+        "why": "The after-clause is dependent and cannot stand alone."
+      },
+      {
+        "prompt": "EXTRA: Write three sentences reviewing a fictional theme park. Include ; however, and one complex list.",
+        "model": "The park looked spectacular; however, the queues were long. Attractions included MoonDrop, a rotating tower; StormRide, a water coaster; and StarPath, a glowing maze. We stayed until sunset.",
+        "why": "Check independent clauses, the transition comma, and whole list items."
+      }
+    ]
+  }
+}
