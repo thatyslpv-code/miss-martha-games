@@ -1,26 +1,24 @@
 # October 20 English games
 
-- 9A: `261019_9A_9th_Parallel_Structure_Boss_Battle.html`
-- 10A: `261019_10A_10th_Semicolons_Escape_Room.html`
-- Teacher results: `261019_9A_10A_English_Teacher_Grades.html`
+Student links:
+- 261019_9A_9th_Parallel_Structure_Boss_Battle.html
+- 261019_10A_10th_Semicolons_Escape_Room.html
 
-Warm orange/yellow/red illustrations, large type, 20 server-scored challenges, 5 creative extras, optional hints, timer, audio controls, unlimited attempts and a final screenshot instruction for Algebraix.
+Teacher results:
+- 261019_9A_10A_English_Teacher_Grades.html
 
-## Access and saving
+## Simplified student entry
 
-The games require a verified `@colegiointernacional.edu.mx` Supabase Auth identity. Typing an email address is not authentication. The deployed `classroom-games` Edge Function calls Auth `/user` on every request, checks verified school email, scopes each attempt to the signed-in user's UUID, and allows the grades list only to `mlopezp@colegiointernacional.edu.mx`. Database client roles have no direct table grants. Service credentials remain only in the function environment.
+Students enter full name, fixed class group and an email ending in @colegiointernacional.edu.mx. No email verification or Supabase Auth account is required for students. The address is self-reported, not proof of ownership. This deliberately simpler classroom flow was requested by Miss Martha.
 
-The server awards 2 points for a correct first answer and 1 after retries; the main total is 40 and grade is points / 4, out of 10. A complete written explanation is required and saved for teacher review; its quality is not automatically graded. Five creative extras are stored separately and do not affect the main grade. No student-facing teacher approval button grants points.
+A random 256-bit token is generated for each attempt and returned once to that browser. Only its SHA-256 hash is stored in the table. All answer, finish and creative-extra requests require that token and the attempt UUID. A browser cannot fetch another attempt using only an email or an attempt UUID. The short-lived tab session retains the token to resume unfinished work. No attempt tokens or service credentials appear in published source.
 
-## Auth prerequisite to verify before classroom use
+Scores remain server-calculated: 2 points for a first correct answer, 1 after retries, maximum 40, grade = score / 4 out of 10. Explanations are saved for teacher review; their quality is not automatically graded. Five creative extras are saved separately without changing the main grade. Final results instruct students to submit a screenshot to Algebraix with name, group, school email and grade visible.
 
-Google login was disabled in the current project's public Auth settings. Email sign-in is enabled. The pages support email links and verification codes, including pasting the full sign-in link from the verification email. Production email delivery to school addresses still needs an actual account sign-in check. If the project uses Supabase's default SMTP, configure a custom SMTP sender; default SMTP does not deliver to arbitrary school accounts. Alternatively configure Google OAuth for the school and add its sign-in flow.
+## Teacher protection
 
-Auth SMTP settings: https://supabase.com/dashboard/project/ioinjygibdzkoonuvknd/auth/smtp
-Auth URL configuration: https://supabase.com/dashboard/project/ioinjygibdzkoonuvknd/auth/url-configuration
-Allowed redirect prefix: https://thatyslpv-code.github.io/miss-martha-games/
-No sign-in emails were sent as a test, and no student accounts were fabricated.
+The teacher page still requires a verified Supabase Auth session for mlopezp@colegiointernacional.edu.mx. Student entry cannot open the grade list. Browser roles have no direct SELECT or INSERT table grants and RLS remains enabled. Email delivery for teacher sign-in is still unverified; Google login was disabled when inspected. If default Supabase SMTP is in use, configure production SMTP for school email delivery.
 
-## Validation
+Auth SMTP: https://supabase.com/dashboard/project/ioinjygibdzkoonuvknd/auth/smtp
 
-Both games' 20-mission server flows were tested with mocked verified identities, including a wrong answer and retry producing 39/40 = 9.75/10, ownership rejection, external-domain rejection, teacher authorization and creative-response storage. JavaScript parses in all three pages. Live unauthorized requests and table grants are checked separately. Real inbox delivery and full browser visual QA remain unverified in this environment.
+The student games do not depend on that teacher-email setup.
