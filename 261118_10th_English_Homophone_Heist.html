@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Homophone Heist | 10th Grade English</title>
+<style>
+:root{color-scheme:dark;--bg:#171925;--panel:#222536;--ink:#fff7eb;--muted:#c4c5d6;--line:#484d68;--gold:#ffcf70;--mint:#a6ebc5;--rose:#ffb1b7}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at 90% 0%,#34314a 0%,transparent 48%),var(--bg);color:var(--ink);font:1rem/1.55 system-ui,sans-serif;min-height:100vh}
+main{max-width:780px;margin:auto;padding:clamp(20px,5vw,55px) 18px}
+header{padding:0 5px 21px}
+.eyebrow,.round{font-weight:750;letter-spacing:.13em;text-transform:uppercase;color:var(--gold);font-size:.73rem}
+h1{font:700 clamp(2.65rem,8vw,4.6rem)/1 Georgia,serif;margin:.17em 0}
+h2{font-size:clamp(1.45rem,4vw,2rem);line-height:1.15;margin:.3em 0 .65em}
+p{margin:.55em 0}
+.sub,.hint,.meta{color:var(--muted)}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:clamp(18px,5vw,34px);box-shadow:0 20px 70px #08091266}
+[hidden]{display:none!important}
+.meta,.actions{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+progress{width:100%;height:8px;display:block;margin:10px 0 25px;accent-color:var(--gold)}
+.sentence{font:clamp(1.4rem,5vw,2.15rem)/1.35 Georgia,serif;padding:14px 0 18px;overflow-wrap:anywhere}
+.blank{color:var(--gold);text-decoration:underline;text-underline-offset:5px}
+label{display:block;font-weight:650;margin-bottom:5px}
+input,button{font:inherit}
+input{width:100%;border:1px solid var(--line);border-radius:10px;color:var(--ink);background:#191b28;padding:10px 13px}
+.fields,.options{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:12px;margin:16px 0}
+button{border:1px solid var(--line);border-radius:10px;background:#2c3044;color:var(--ink);padding:10px 14px;cursor:pointer;font-weight:700}
+button:hover:not(:disabled){border-color:var(--gold)}
+button:disabled{cursor:default;opacity:.84}
+button[aria-pressed="true"]{background:#403851;border-color:var(--gold)}
+.primary{background:var(--gold);color:#211907;border-color:var(--gold)}
+:focus-visible{outline:3px solid var(--mint);outline-offset:3px}
+.feedback{padding:10px 12px;margin:14px 0;border-radius:10px;background:#191b28;border-left:4px solid var(--line)}
+.good{border-color:var(--mint)}
+.miss{border-color:var(--rose)}
+.score{font:700 clamp(3rem,12vw,5rem)/1.1 Georgia,serif;color:var(--gold)}
+details{margin-top:20px}
+summary{cursor:pointer;font-weight:700}
+li{margin:.65em 0}
+</style>
+</head>
+<body>
+<main>
+<header><div class="eyebrow">10th Grade English · Homophones</div><h1>Homophone Heist</h1><p class="sub">Someone swapped the words in the case file. Use context clues to restore the original report.</p></header>
+
+<section class="panel" id="start">
+<h2>Open the case file</h2>
+<p>Solve 15 clues in three rounds. Choose the right word, type the missing word, then identify what the word means in context.</p>
+<p class="hint">Each correct answer earns one point. At the end, take a screenshot of your score for Algebraix.</p>
+<form id="start-form" novalidate>
+<p id="start-help" class="hint">Enter your name and group to begin.</p>
+<p id="preview-help" class="feedback">If you are viewing a file preview, download the HTML file and open it in your browser.</p>
+<div class="fields">
+<div><label for="name">Name</label><input id="name" placeholder="Example: Alex Rivera" maxlength="80" aria-describedby="start-help" required></div>
+<div><label for="group">Group</label><input id="group" placeholder="Example: 10B" maxlength="12" aria-describedby="start-help" required></div>
+</div>
+<p class="feedback miss" id="start-error" role="alert" hidden></p>
+<button class="primary" id="start-button" type="button" disabled>Start the investigation</button>
+</form>
+</section>
+
+<section class="panel" id="game" hidden>
+<div class="meta"><span class="round" id="round"></span><span id="count"></span></div>
+<progress id="progress" max="15" value="0" aria-label="Clues completed"></progress>
+<h2 id="prompt" tabindex="-1"></h2>
+<p class="sentence" id="sentence"></p>
+<form id="answer-form">
+<div class="options" id="options" role="group" aria-labelledby="prompt" aria-describedby="sentence"></div>
+<div id="typed" hidden><p class="hint" id="word-bank"></p><label for="answer">Type the missing word</label><input id="answer" spellcheck="false" autocomplete="off" autocapitalize="off" maxlength="40" aria-describedby="sentence word-bank"></div>
+<p class="feedback" id="feedback" role="status" hidden></p>
+<div class="actions">
+<button class="primary" id="check" type="submit" disabled>Check answer</button>
+<button class="primary" id="next" type="button" hidden>Next clue</button>
+<span class="hint" id="running-score"></span>
+</div>
+</form>
+</section>
+
+<section class="panel" id="results" hidden>
+<p class="round">Case closed</p>
+<h2 id="result-title" tabindex="-1">Homophone Heist results</h2>
+<p id="identity"></p>
+<p class="score" id="final-score"></p>
+<p id="result-breakdown"></p>
+<p class="hint">Take a screenshot showing your name, group, and score. Upload it to Algebraix.</p>
+<details><summary>Review missed clues</summary><div id="review"></div></details>
+</section>
+</main>
+<script>
+'use strict';
+const rounds = [
+  {
+    title: 'Round 1 · Choose the word',
+    prompt: 'Which word completes the sentence?',
+    clues: [
+      ['The cleaning crew mopped around the ___ where the stairs met the lobby floor.', ['seam','seem'], 'seam', 'A seam is a line where two surfaces or pieces meet. Seem means to appear to be.'],
+      ['The detective followed a muddy path straight ___ the garden gate.', ['too','two','to'], 'to', 'To indicates direction. Too can mean also, and two is a number.'],
+      ['The conductor asked the musicians to ___ for ten seconds before the final note.', ['pause','paws'], 'pause', 'To pause means to stop briefly. Paws are animals’ feet.'],
+      ['The guard checked the delivery van’s ___ before letting it through the gate.', ['wait','weight'], 'weight', 'Weight tells how heavy something is. A wait is a period of delay.'],
+      ['The building’s ___ staircase leads directly to the roof.', ['principle','principal'], 'principal', 'Principal means main here. A principle is a rule or belief.']
+    ]
+  },
+  {
+    title: 'Round 2 · Type the word',
+    prompt: 'Type the word that fits the sentence.',
+    clues: [
+      ['The editor ordered letterhead and envelopes from a ___ supplier.', ['stationary','stationery'], 'stationery', 'Stationery means writing and office supplies. Stationary means staying still.'],
+      ['The technician was asked to ___ the torn lining back together with a needle and thread.', ['so','sow','sew'], 'sew', 'To sew means to join material using a needle and thread. To sow means to plant seeds.'],
+      ['The manager gave the team a ___ on how carefully they handled the evidence.', ['complement','compliment'], 'compliment', 'A compliment is an expression of praise. A complement is something that completes or enhances something else.'],
+      ['The witness signed the form to ___ her right to remain anonymous.', ['wave','waive'], 'waive', 'To waive a right means to give it up voluntarily. To wave means to move back and forth.'],
+      ['The clerk read the witness’s statement ___ so everyone in the room could hear it.', ['aloud','allowed'], 'aloud', 'Aloud means audibly. Allowed means permitted.']
+    ]
+  },
+  {
+    title: 'Round 3 · Prove the meaning',
+    prompt: 'What does the highlighted word mean here?',
+    clues: [
+      ['The photographer adjusted the camera to capture the full [[scene]].', ['Something previously viewed','A written list','A place or view'], 'A place or view', 'Scene refers to the place or view being photographed. Seen is a form of see.'],
+      ['The broken bolt landed next to a bowl of [[cereal]] on the technician’s desk.', ['A code that identifies a device','A food usually made from grain','A sequence of related events'], 'A food usually made from grain', 'Cereal is a grain or a food made from grain. Serial relates to a sequence, as in serial number.'],
+      ['The assistant asked for a [[piece]] of paper to take notes.', ['A sheet or portion','Freedom from conflict','A note that has already been written'], 'A sheet or portion', 'A piece is a part or single item. Peace means calm or an absence of conflict.'],
+      ['The guard pulled hard on the [[brake]] as the cart rolled downhill.', ['A short rest','A handle used to steer','A device that slows movement'], 'A device that slows movement', 'A brake slows or stops movement. A break can mean a rest or an interruption.'],
+      ['The officer asked for a [[discreet]] conversation in a private room.', ['Divided into separate parts','Careful to avoid drawing attention','Held at a set time'], 'Careful to avoid drawing attention', 'Discreet means tactful or careful about privacy. Discrete means separate or distinct.']
+    ]
+  }
+];
+
+const byId = id => document.getElementById(id);
+const bank = rounds.flatMap((round, roundIndex) => round.clues.map(clue => ({round, roundIndex, clue})));
+const check = byId('check');
+const next = byId('next');
+const feedback = byId('feedback');
+const input = byId('answer');
+const options = byId('options');
+const answers = [];
+let student;
+let current = 0;
+let selected = '';
+let correct = 0;
+let locked = false;
+
+function renderSentence(text) {
+  const match = /___|\[\[(.*?)\]\]/.exec(text);
+  const highlight = document.createElement('span');
+  highlight.className = 'blank';
+  highlight.textContent = match[1] ?? '_____';
+  byId('sentence').replaceChildren(text.slice(0, match.index), highlight, text.slice(match.index + match[0].length));
+}
+
+function showClue() {
+  const {round, roundIndex, clue} = bank[current];
+  const isTyping = roundIndex === 1;
+  const [sentence, choices] = clue;
+  locked = false;
+  selected = '';
+  byId('round').textContent = round.title;
+  byId('count').textContent = 'Clue ' + (current + 1) + ' of ' + bank.length;
+  byId('progress').value = current;
+  byId('prompt').textContent = round.prompt;
+  byId('running-score').textContent = 'Points earned: ' + correct;
+  renderSentence(sentence);
+  input.value = '';
+  input.disabled = false;
+  byId('typed').hidden = !isTyping;
+  byId('word-bank').textContent = isTyping ? 'Word bank: ' + choices.join(' · ') : '';
+  options.hidden = isTyping;
+  options.replaceChildren();
+  for (const choice of isTyping ? [] : choices) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.textContent = choice;
+    button.setAttribute('aria-pressed', 'false');
+    button.addEventListener('click', () => {
+      selected = choice;
+      for (const option of options.children) option.setAttribute('aria-pressed', String(option === button));
+      check.disabled = false;
+    });
+    options.append(button);
+  }
+  feedback.hidden = true;
+  feedback.textContent = '';
+  next.hidden = true;
+  check.hidden = false;
+  check.disabled = true;
+  byId('prompt').focus();
+}
+
+function showResults() {
+  byId('game').hidden = true;
+  byId('results').hidden = false;
+  byId('identity').textContent = student.name + ' · Group ' + student.group;
+  byId('final-score').textContent = correct + ' / ' + bank.length + '  ·  ' + Math.round(100 * correct / bank.length) + '%';
+  byId('result-breakdown').textContent = rounds.map((round, index) => {
+    const points = answers.filter(answer => answer.roundIndex === index && answer.right).length;
+    return 'Round ' + (index + 1) + ' — ' + points + '/' + round.clues.length;
+  }).join('  ·  ');
+  const missed = answers.filter(answer => !answer.right);
+  if (missed.length) {
+    const list = document.createElement('ol');
+    for (const answer of missed) {
+      const item = document.createElement('li');
+      item.value = answer.number;
+      item.textContent = answer.sentence.replace('___', answer.expected).replace(/\[\[(.*?)\]\]/, '$1') +
+        ' — Your answer: ' + answer.response + '. ' + answer.explanation;
+      list.append(item);
+    }
+    byId('review').append(list);
+  } else {
+    byId('review').textContent = 'You solved all 15 clues.';
+  }
+  byId('result-title').focus();
+}
+
+function startGame() {
+  const error = byId('start-error');
+  for (const [id, message] of [['name', 'Enter your name to begin.'], ['group', 'Enter your group, for example 10B.']]) {
+    const field = byId(id);
+    field.removeAttribute('aria-invalid');
+    if (!field.value.trim()) {
+      error.textContent = message;
+      error.hidden = false;
+      field.setAttribute('aria-invalid', 'true');
+      field.focus();
+      return;
+    }
+  }
+  error.hidden = true;
+  student = {name: byId('name').value.trim(), group: byId('group').value.trim()};
+  byId('start').hidden = true;
+  byId('game').hidden = false;
+  showClue();
+}
+
+byId('start-button').addEventListener('click', startGame);
+byId('start-form').addEventListener('submit', event => {
+  event.preventDefault();
+  startGame();
+});
+byId('start-form').addEventListener('keydown', event => {
+  if (event.key === 'Enter' && event.target.tagName === 'INPUT') {
+    event.preventDefault();
+    startGame();
+  }
+});
+
+input.addEventListener('input', () => { check.disabled = !input.value.trim(); });
+byId('answer-form').addEventListener('submit', event => {
+  event.preventDefault();
+  const response = (selected || input.value).trim();
+  if (locked || !response) return;
+  locked = true;
+  const {roundIndex, clue} = bank[current];
+  const [sentence, , expected, explanation] = clue;
+  const right = response.toLowerCase() === expected.toLowerCase();
+  answers.push({number: current + 1, roundIndex, sentence, response, expected, explanation, right});
+  correct += Number(right);
+  byId('progress').value = current + 1;
+  byId('running-score').textContent = 'Points earned: ' + correct;
+  feedback.className = 'feedback ' + (right ? 'good' : 'miss');
+  feedback.hidden = false;
+  feedback.textContent = (right ? 'Correct! ' : 'Answer: ' + expected + '. ') + explanation;
+  input.disabled = true;
+  for (const option of options.children) option.disabled = true;
+  check.hidden = true;
+  next.textContent = current === bank.length - 1 ? 'See results' : 'Next clue';
+  next.hidden = false;
+  next.focus();
+});
+next.addEventListener('click', () => {
+  current += 1;
+  if (current === bank.length) showResults();
+  else showClue();
+});
+byId('preview-help').hidden = true;
+byId('start-button').disabled = false;
+</script>
+</body>
+</html>
