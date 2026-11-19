@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dash Detectives · Miss Martha</title>
+<style>
+:root{color-scheme:dark;--bg:#101d24;--panel:#1a2c35;--line:#405460;--ink:#f8fbff;--muted:#bacbd4;--accent:#b8fc83;--halo:#2b483c;--error:#ffc6bc}
+body[data-theme="dash"]{--bg:#172028;--panel:#213442;--line:#4d6472;--accent:#ffe087;--halo:#41443c}
+body[data-theme="comma"]{--bg:#19192c;--panel:#272840;--line:#535676;--accent:#ffc682;--halo:#453854}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:radial-gradient(ellipse at top right,var(--halo),transparent 48%),var(--bg);color:var(--ink);font:1rem/1.55 system-ui,sans-serif;min-height:100vh}
+main{width:min(950px,calc(100% - 36px));margin:auto;padding:30px 0 55px}
+header{display:flex;justify-content:space-between;gap:12px;align-items:center;padding-bottom:15px;border-bottom:1px solid var(--line);color:var(--muted);font-size:.88rem}
+header strong{color:var(--ink)}
+h1,h2,p{margin:0}
+h1,h2{line-height:1.1;letter-spacing:-.035em}
+h1{font-size:clamp(2.8rem,8.2vw,6rem);max-width:9ch}
+h2{font-size:clamp(1.6rem,4.7vw,3rem)}
+.intro{display:grid;grid-template-columns:1.2fr .8fr;align-items:center;gap:36px;padding:clamp(24px,5vw,56px);margin-top:34px;background:var(--panel);border:1px solid var(--line);border-radius:26px}
+.pair-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:18px}
+.pair-form fieldset{min-width:0;margin:0;padding:0 10px 12px;border:1px solid var(--line);border-radius:10px}
+.pair-form legend{padding:0 5px;color:var(--accent);font-weight:750}
+.pair-form label{font-size:.9rem}
+.pair-form input{width:100%;min-height:42px;margin-top:4px;padding:6px 8px;border:1px solid var(--line);border-radius:7px;background:var(--bg);color:var(--ink);font:inherit}
+.pair-form input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.pair-form .action{grid-column:1/-1;justify-self:start}
+#partners{margin:0 0 10px;overflow-wrap:anywhere}
+.change-pair{min-height:46px;margin:15px 0 0 12px;padding:6px 10px;border:0;background:none;color:var(--accent);text-decoration:underline}
+@media(max-width:440px){.pair-form{grid-template-columns:1fr}}
+.intro p{max-width:39ch;color:var(--muted);margin:18px 0 26px}
+.mark{display:grid;place-items:center;min-height:280px;border:1px solid var(--line);border-radius:18px;color:var(--accent);background:repeating-linear-gradient(0deg,transparent 0 25px,var(--line) 26px,transparent 27px),var(--halo);font:700 clamp(9rem,20vw,15rem)/.82 Georgia,serif;user-select:none}
+button{font:inherit;cursor:pointer}
+button:focus-visible,summary:focus-visible{outline:3px solid white;outline-offset:4px}
+.action{display:inline-flex;align-items:center;justify-content:center;border:1px solid transparent;border-radius:10px;padding:10px 22px;min-height:46px;background:var(--accent);color:#152027;font-weight:800}
+.action:hover{filter:brightness(1.10)}
+.action:disabled{opacity:.48;cursor:default;filter:none}
+.play,.finish{max-width:800px;margin:28px auto 0}
+.stats{display:flex;justify-content:space-between;gap:12px;color:var(--muted)}
+progress{width:100%;height:10px;appearance:none;border:0;background:var(--line);border-radius:20px;overflow:hidden;display:block;margin:10px 0 20px}
+progress::-webkit-progress-bar{background:var(--line)}
+progress::-webkit-progress-value{background:var(--accent)}
+progress::-moz-progress-bar{background:var(--accent)}
+.card{border:1px solid var(--line);border-radius:21px;padding:clamp(18px,4vw,34px);background:var(--panel)}
+.label{color:var(--accent);font-size:.88rem;font-weight:750;margin-bottom:8px}
+.prompt{font:clamp(1.22rem,3.4vw,1.85rem)/1.4 Georgia,serif;white-space:pre-line;margin-top:16px;padding:12px 15px;border-left:3px solid var(--accent);background:var(--bg);border-radius:0 8px 8px 0}
+.options{display:grid;gap:9px;margin-top:18px}
+.option{display:flex;align-items:baseline;gap:13px;text-align:left;color:var(--ink);border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:10px 13px;width:100%;min-height:48px}
+.option:hover:not(:disabled),.option[aria-pressed="true"]{border-color:var(--accent)}
+.option:disabled{cursor:default}
+.option b{display:inline-grid;place-items:center;flex:0 0 25px;height:25px;border:1px solid var(--line);border-radius:6px;font-size:.85rem;color:var(--muted)}
+.option span{white-space:pre-wrap}
+.option.right{border-color:var(--accent);color:var(--accent)}
+.option.wrong{border-color:var(--error);color:var(--error)}
+.feedback:not(:empty){padding:11px 13px;background:var(--bg);border-radius:8px;margin-top:15px}
+.controls{display:flex;justify-content:flex-end;margin-top:17px}
+.finish .score{color:var(--accent);font-size:clamp(3.5rem,12vw,7rem);font-weight:850;line-height:1;margin:14px 0}
+.finish .action{margin-top:22px}
+.roles{margin:6px 0 18px;color:var(--muted)}
+.entry{display:block;width:100%;min-height:105px;margin:6px 0 14px;padding:10px 13px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit;resize:vertical}
+.entry:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+label{display:block;font-weight:700;margin-top:10px}
+.finish-list{white-space:pre-wrap;overflow-wrap:anywhere}
+details{margin-top:18px}
+summary{cursor:pointer;color:var(--accent);font-weight:750}
+li{margin:10px 0}
+@media(max-width:620px){.intro{grid-template-columns:1fr;gap:22px;margin-top:22px}.mark{min-height:120px;font-size:8rem;order:-1}main{padding-top:20px;width:calc(100% - 26px)}}
+</style>
+</head>
+<body data-theme="dash">
+<main>
+  <header><strong>Miss Martha · 7A English</strong><span>Unit 3 · Chapter 11</span></header>
+  <section id="intro" class="intro" aria-labelledby="title">
+    <div>
+      <h1 id="title">Dash Detectives</h1>
+      <p>A silver compass has vanished from the museum. Edit the clues and write a report to solve the case.</p>
+      <p><strong>2 players · 25–30 minutes</strong><br> Work together before you choose. Switch roles at each new round. Complete three writing challenges together.</p>
+      <form id="pairForm" class="pair-form" autocomplete="off">
+        <fieldset>
+          <legend>Player A</legend>
+          <label for="nameA">Full name</label>
+          <input id="nameA" type="text" maxlength="100" required>
+          <label for="emailA">School email address</label>
+          <input id="emailA" type="email" maxlength="254" required>
+        </fieldset>
+        <fieldset>
+          <legend>Player B</legend>
+          <label for="nameB">Full name</label>
+          <input id="nameB" type="text" maxlength="100" required>
+          <label for="emailB">School email address</label>
+          <input id="emailB" type="email" maxlength="254" required>
+        </fieldset>
+        <button type="submit" id="start" class="action">Start game</button>
+      </form>
+    </div>
+    <div class="mark" aria-hidden="true">—</div>
+  </section>
+  <section id="play" class="play" aria-labelledby="instruction" hidden>
+    <div class="stats"><span id="count"></span><span id="points"></span></div>
+    <progress id="progress" aria-label="Questions answered"></progress>
+    <div class="card">
+      <p class="label" id="round"></p>
+      <p id="roles" class="roles"></p>
+      <h2 id="instruction" tabindex="-1"></h2>
+      <p id="prompt" class="prompt"></p>
+      <div id="options" class="options" role="group" aria-labelledby="instruction prompt"></div>
+      <p id="feedback" class="feedback" role="status"></p>
+      <div class="controls"><button type="button" id="next" class="action" disabled>Next question</button></div>
+    </div>
+  </section>
+  <section id="mission" class="play card" aria-labelledby="missionTitle" hidden>
+    <p id="missionRound" class="label"></p>
+    <h2 id="missionTitle" tabindex="-1"></h2>
+    <p id="missionPrompt" class="prompt"></p>
+    <form id="missionForm">
+      <label for="draft" id="draftLabel"></label>
+      <textarea id="draft" class="entry" required></textarea>
+      <label for="reason" id="reasonLabel"></label>
+      <textarea id="reason" class="entry" required></textarea>
+      <div class="controls"><button class="action" type="submit" id="missionNext">Continue</button></div>
+    </form>
+  </section>
+  <section id="finish" class="finish card" aria-labelledby="done" hidden>
+    <p class="label">Dash Detectives</p>
+    <h2 id="done" tabindex="-1">Game complete</h2>
+    <p id="score" class="score"></p>
+    <p id="partners"></p>
+    <p id="result"></p>
+    <details id="review" hidden>
+      <summary>Review missed questions</summary>
+      <ol id="mistakes"></ol>
+    </details>
+    <details id="writing">
+      <summary>See your writing challenges</summary>
+      <ol id="work" class="finish-list"></ol>
+    </details>
+    <button type="button" class="action" id="again">Play again</button>
+    <button type="button" id="changePair" class="change-pair">Change players</button>
+  </section>
+</main>
+<script>
+"use strict";
+
+const rounds = [
+  {
+    "name": "Round 1 · A reveal at the end",
+    "instruction": "Place one em dash before the reveal.",
+    "items": [
+      {
+        "prompt": "The lights came back on the glass case was empty.",
+        "answer": "The lights came back on—the glass case was empty.",
+        "distractors": [
+          "The lights came back—on the glass case was empty.",
+          "The lights came back on the glass case—was empty."
+        ],
+        "explanation": "The first event ends at “on.” The empty case is the surprise that comes after the dash."
+      },
+      {
+        "prompt": "The curator searched every display and found just one clue a red ribbon.",
+        "answer": "The curator searched every display and found just one clue—a red ribbon.",
+        "distractors": [
+          "The curator searched every display—and found just one clue a red ribbon.",
+          "The curator searched every display and found just—one clue a red ribbon."
+        ],
+        "explanation": "The group of words after the dash tells us exactly what the clue was."
+      },
+      {
+        "prompt": "The guard heard an unexpected sound a phone ringing inside a cabinet.",
+        "answer": "The guard heard an unexpected sound—a phone ringing inside a cabinet.",
+        "distractors": [
+          "The guard heard—an unexpected sound a phone ringing inside a cabinet.",
+          "The guard heard an unexpected sound a phone—ringing inside a cabinet."
+        ],
+        "explanation": "“A phone ringing inside a cabinet” explains what the sound was."
+      },
+      {
+        "prompt": "The security camera captured something strange a shadow shaped like a bird.",
+        "answer": "The security camera captured something strange—a shadow shaped like a bird.",
+        "distractors": [
+          "The security camera captured—something strange a shadow shaped like a bird.",
+          "The security camera captured something strange a shadow—shaped like a bird."
+        ],
+        "explanation": "The words after the dash reveal what the camera captured."
+      }
+    ]
+  },
+  {
+    "name": "Round 2 · A detail in the middle",
+    "instruction": "Put an em dash on each side of the added detail.",
+    "items": [
+      {
+        "prompt": "The display case the oldest one in the gallery had a loose hinge.",
+        "answer": "The display case—the oldest one in the gallery—had a loose hinge.",
+        "distractors": [
+          "The display case the oldest one—in the gallery—had a loose hinge.",
+          "The display case—the oldest one in the gallery had a loose hinge."
+        ],
+        "explanation": "The complete detail is “the oldest one in the gallery.” The main sentence is “The display case had a loose hinge.”"
+      },
+      {
+        "prompt": "Our guide a retired sailor recognized the compass right away.",
+        "answer": "Our guide—a retired sailor—recognized the compass right away.",
+        "distractors": [
+          "Our guide a retired sailor—recognized the compass—right away.",
+          "Our guide—a retired sailor recognized the compass—right away."
+        ],
+        "explanation": "“A retired sailor” adds information about the guide. The sentence continues with “recognized.”"
+      },
+      {
+        "prompt": "The service elevator usually locked after six was open.",
+        "answer": "The service elevator—usually locked after six—was open.",
+        "distractors": [
+          "The service elevator usually—locked after six—was open.",
+          "The service elevator—usually locked after six was—open."
+        ],
+        "explanation": "Both dashes surround “usually locked after six.” The main sentence still reads “The service elevator was open.”"
+      },
+      {
+        "prompt": "The lock the only part made of brass showed no damage.",
+        "answer": "The lock—the only part made of brass—showed no damage.",
+        "distractors": [
+          "The lock—the only part made of brass showed no damage.",
+          "The lock the only part—made of brass—showed no damage."
+        ],
+        "explanation": "The extra description starts with “the only part” and ends at “brass.”"
+      }
+    ]
+  },
+  {
+    "name": "Round 3 · Read the evidence",
+    "instruction": "Decide what the em dash or dashes do.",
+    "items": [
+      {
+        "prompt": "The museum map—a copy printed that morning—showed a narrow passage.",
+        "answer": "Two dashes set off a detail about the map.",
+        "distractors": [
+          "One dash reveals what was in the passage.",
+          "The dashes join the words “narrow passage.”"
+        ],
+        "explanation": "Remove “a copy printed that morning” and the two dashes. The map still shows a narrow passage."
+      },
+      {
+        "prompt": "The ribbon pointed to a different room—the gift shop.",
+        "answer": "One dash identifies the room at the end.",
+        "distractors": [
+          "Two dashes set off a detail about the ribbon.",
+          "The dash joins the words “gift shop.”"
+        ],
+        "explanation": "“The gift shop” identifies the room after the main statement."
+      },
+      {
+        "prompt": "The metal tray—still damp from the rain—left a mark on the floor.\nWhich words can you remove with the two dashes?",
+        "answer": "still damp from the rain",
+        "distractors": [
+          "left a mark on the floor",
+          "the metal tray"
+        ],
+        "explanation": "The words between the dashes are extra detail. “The metal tray left a mark on the floor” still makes sense."
+      },
+      {
+        "prompt": "Behind the picture frame, we found our biggest clue—a map with today’s date.\nWhy did the writer use a dash here?",
+        "answer": "To emphasize what the biggest clue was.",
+        "distractors": [
+          "To separate “Behind the picture frame” from the rest.",
+          "To mark a detail that interrupts the middle of the sentence."
+        ],
+        "explanation": "The dash draws attention to the final reveal: the dated map."
+      }
+    ]
+  }
+];
+const missions = [
+  {
+    "title": "Reveal a new clue",
+    "prompt": "Player A types. Player B checks. The museum staff noticed something strange near the empty display. Finish this sentence in your own words and use one em dash to reveal what they found.\nThe guard lifted the velvet cover …",
+    "draft": "Player A · Write the complete sentence with one em dash (—).",
+    "reason": "Player B · Explain which words create the surprise and why the dash belongs there."
+  },
+  {
+    "title": "Add a witness detail",
+    "prompt": "Player B types. Player A checks. Add one relevant detail about the volunteer in the middle of this sentence.\nThe volunteer heard a soft click just before the lights went out.",
+    "draft": "Player B · Rewrite the whole sentence and put two em dashes around your detail.",
+    "reason": "Player A · Write what remains when you remove the detail and both dashes. Does it still make sense?"
+  },
+  {
+    "title": "File the museum report",
+    "prompt": "Invent an explanation for why the silver compass vanished from its display. Write a four-sentence museum report together. Include one pair of em dashes around a witness detail and one single em dash before the final reveal.",
+    "draft": "Both players · Alternate sentences and write your four-sentence report.",
+    "reason": "Both players · Label the inserted detail and the final reveal. Check that there are three em dashes in total."
+  }
+];
+const questions = rounds.flatMap((round, roundIndex) =>
+  round.items.map((item, itemIndex) => ({
+    ...item,
+    round: round.name,
+    instruction: round.instruction,
+    roundIndex,
+    endsRound: itemIndex === round.items.length - 1
+  }))
+);
+const ui = Object.fromEntries(Array.from(document.querySelectorAll("[id]"), element => [element.id, element]));
+let index = 0;
+let score = 0;
+let misses = [];
+let answered = false;
+let submissions = [];
+let pairNames = [];
+
+function shuffle(values) {
+  const result = [...values];
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+}
+
+function renderQuestion() {
+  const question = questions[index];
+  answered = false;
+  ui.count.textContent = `Question ${index + 1} of ${questions.length}`;
+  ui.points.textContent = `Score ${score}`;
+  ui.progress.value = index;
+  ui.round.textContent = question.round;
+  const editor = question.roundIndex % 2 === 0 ? "Player A" : "Player B";
+  const reviewer = editor === "Player A" ? "Player B" : "Player A";
+  ui.roles.textContent = `${editor} reads and proposes an edit. ${reviewer} explains the rule and selects your answer.`;
+  ui.instruction.textContent = question.instruction;
+  ui.prompt.textContent = question.prompt;
+  ui.feedback.textContent = "";
+  ui.options.replaceChildren();
+  ui.next.disabled = true;
+  ui.next.textContent = question.endsRound ? "Writing challenge" : "Next question";
+
+  shuffle([question.answer, ...question.distractors]).forEach((choice, position) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "option";
+    button.setAttribute("aria-pressed", "false");
+    const letter = document.createElement("b");
+    letter.textContent = String.fromCharCode(65 + position);
+    letter.setAttribute("aria-hidden", "true");
+    const label = document.createElement("span");
+    label.textContent = choice;
+    button.append(letter, label);
+    button.addEventListener("click", () => grade(question, choice, button));
+    ui.options.append(button);
+  });
+  ui.instruction.focus();
+}
+
+function grade(question, choice, selected) {
+  if (answered) return;
+  answered = true;
+  const correct = choice === question.answer;
+  if (correct) score++;
+  else misses.push(question);
+  selected.setAttribute("aria-pressed", "true");
+  for (const button of ui.options.children) {
+    button.disabled = true;
+    if (button.lastChild.textContent === question.answer) button.classList.add("right");
+    else if (button === selected) button.classList.add("wrong");
+  }
+  ui.points.textContent = `Score ${score}`;
+  ui.progress.value = index + 1;
+  ui.feedback.textContent = `${correct ? "Correct!" : "Take another look."} ${question.explanation}`;
+  ui.next.disabled = false;
+  ui.next.focus();
+}
+
+function registerPair(event) {
+  event.preventDefault();
+  const names = [ui.nameA, ui.nameB].map(field => field.value.trim());
+  const emptyIndex = names.findIndex(name => !name);
+  if (emptyIndex !== -1) {
+    const field = [ui.nameA, ui.nameB][emptyIndex];
+    field.value = "";
+    field.reportValidity();
+    return;
+  }
+  if (ui.emailA.value.trim().toLowerCase() === ui.emailB.value.trim().toLowerCase()) {
+    ui.emailB.setCustomValidity("Enter Player B’s own school email address.");
+    ui.emailB.reportValidity();
+    return;
+  }
+  pairNames = names;
+  ui.emailA.value = "";
+  ui.emailB.value = "";
+  start();
+}
+
+function changePlayers() {
+  pairNames = [];
+  ui.pairForm.reset();
+  ui.finish.hidden = true;
+  ui.intro.hidden = false;
+  ui.nameA.focus();
+}
+
+function start() {
+  index = 0;
+  score = 0;
+  misses = [];
+  submissions = [];
+  ui.mission.hidden = true;
+  ui.intro.hidden = true;
+  ui.finish.hidden = true;
+  ui.play.hidden = false;
+  ui.progress.max = questions.length;
+  renderQuestion();
+}
+
+function advance() {
+  if (!answered) return;
+  const question = questions[index];
+  if (question.endsRound) {
+    const mission = missions[question.roundIndex];
+    ui.play.hidden = true;
+    ui.mission.hidden = false;
+    ui.missionRound.textContent = `Writing challenge ${question.roundIndex + 1} of ${missions.length}`;
+    ui.missionTitle.textContent = mission.title;
+    ui.missionPrompt.textContent = mission.prompt;
+    ui.draftLabel.textContent = mission.draft;
+    ui.reasonLabel.textContent = mission.reason;
+    ui.missionForm.reset();
+    ui.missionNext.textContent = index === questions.length - 1 ? "See results" : "Start next round";
+    ui.missionTitle.focus();
+    return;
+  }
+  index++;
+  renderQuestion();
+}
+
+function submitWriting(event) {
+  event.preventDefault();
+  const emptyField = [ui.draft, ui.reason].find(field => !field.value.trim());
+  if (emptyField) {
+    emptyField.value = "";
+    emptyField.reportValidity();
+    return;
+  }
+  const { title } = missions[questions[index].roundIndex];
+  submissions.push({ title, draft: ui.draft.value.trim(), reason: ui.reason.value.trim() });
+  ui.mission.hidden = true;
+  index++;
+  if (index < questions.length) {
+    ui.play.hidden = false;
+    renderQuestion();
+    return;
+  }
+  showResults();
+}
+
+function showResults() {
+  ui.play.hidden = true;
+  ui.finish.hidden = false;
+  ui.score.textContent = `${score} / ${questions.length}`;
+  ui.partners.textContent = pairNames.join(" · ");
+  ui.result.textContent = `${Math.round(score / questions.length * 100)}% on editing questions · ${submissions.length} of ${missions.length} writing challenges completed. Take a screenshot of this result for Algebraix.`;
+  ui.writing.open = false;
+  ui.work.replaceChildren();
+  for (const submission of submissions) {
+    const entry = document.createElement("li");
+    entry.textContent = `${submission.title}\n${submission.draft}\n${submission.reason}`;
+    ui.work.append(entry);
+  }
+  ui.review.open = false;
+  ui.review.hidden = misses.length === 0;
+  ui.mistakes.replaceChildren();
+  for (const question of misses) {
+    const entry = document.createElement("li");
+    entry.textContent = `${question.prompt} — ${question.answer} ${question.explanation}`;
+    ui.mistakes.append(entry);
+  }
+  ui.done.focus();
+}
+
+ui.pairForm.addEventListener("submit", registerPair);
+for (const input of [ui.emailA, ui.emailB]) {
+  input.addEventListener("input", () => ui.emailB.setCustomValidity(""));
+}
+ui.changePair.addEventListener("click", changePlayers);
+ui.next.addEventListener("click", advance);
+ui.missionForm.addEventListener("submit", submitWriting);
+ui.again.addEventListener("click", start);
+</script>
+</body>
+</html>
