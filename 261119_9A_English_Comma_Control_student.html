@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Comma Control · Miss Martha</title>
+<style>
+:root{color-scheme:dark;--bg:#101d24;--panel:#1a2c35;--line:#405460;--ink:#f8fbff;--muted:#bacbd4;--accent:#b8fc83;--halo:#2b483c;--error:#ffc6bc}
+body[data-theme="comma"]{--bg:#19192c;--panel:#272840;--line:#535676;--accent:#ffc682;--halo:#453854}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:radial-gradient(ellipse at top right,var(--halo),transparent 48%),var(--bg);color:var(--ink);font:1rem/1.55 system-ui,sans-serif;min-height:100vh}
+main{width:min(950px,calc(100% - 36px));margin:auto;padding:30px 0 55px}
+header{display:flex;justify-content:space-between;gap:12px;align-items:center;padding-bottom:15px;border-bottom:1px solid var(--line);color:var(--muted);font-size:.88rem}
+header strong{color:var(--ink)}
+h1,h2,p{margin:0}
+h1,h2{line-height:1.1;letter-spacing:-.035em}
+h1{font-size:clamp(2.8rem,8.2vw,6rem);max-width:9ch}
+h2{font-size:clamp(1.6rem,4.7vw,3rem)}
+.intro{display:grid;grid-template-columns:1.2fr .8fr;align-items:center;gap:36px;padding:clamp(24px,5vw,56px);margin-top:34px;background:var(--panel);border:1px solid var(--line);border-radius:26px}
+.intro p{max-width:39ch;color:var(--muted);margin:18px 0 26px}
+.mark{display:grid;place-items:center;min-height:280px;border:1px solid var(--line);border-radius:18px;color:var(--accent);background:repeating-linear-gradient(0deg,transparent 0 25px,var(--line) 26px,transparent 27px),var(--halo);font:700 clamp(9rem,20vw,15rem)/.82 Georgia,serif;user-select:none}
+button{font:inherit;cursor:pointer}
+button:focus-visible,summary:focus-visible{outline:3px solid white;outline-offset:4px}
+.action{display:inline-flex;align-items:center;justify-content:center;border:1px solid transparent;border-radius:10px;padding:10px 22px;min-height:46px;background:var(--accent);color:#152027;font-weight:800}
+.action:hover{filter:brightness(1.10)}
+.action:disabled{opacity:.48;cursor:default;filter:none}
+.play,.finish{max-width:800px;margin:28px auto 0}
+.stats{display:flex;justify-content:space-between;gap:12px;color:var(--muted)}
+progress{width:100%;height:10px;appearance:none;border:0;background:var(--line);border-radius:20px;overflow:hidden;display:block;margin:10px 0 20px}
+progress::-webkit-progress-bar{background:var(--line)}
+progress::-webkit-progress-value{background:var(--accent)}
+progress::-moz-progress-bar{background:var(--accent)}
+.card{border:1px solid var(--line);border-radius:21px;padding:clamp(18px,4vw,34px);background:var(--panel)}
+.label{color:var(--accent);font-size:.88rem;font-weight:750;margin-bottom:8px}
+.prompt{font:clamp(1.22rem,3.4vw,1.85rem)/1.4 Georgia,serif;white-space:pre-line;margin-top:16px;padding:12px 15px;border-left:3px solid var(--accent);background:var(--bg);border-radius:0 8px 8px 0}
+.options{display:grid;gap:9px;margin-top:18px}
+.option{display:flex;align-items:baseline;gap:13px;text-align:left;color:var(--ink);border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:10px 13px;width:100%;min-height:48px}
+.option:hover:not(:disabled),.option[aria-pressed="true"]{border-color:var(--accent)}
+.option:disabled{cursor:default}
+.option b{display:inline-grid;place-items:center;flex:0 0 25px;height:25px;border:1px solid var(--line);border-radius:6px;font-size:.85rem;color:var(--muted)}
+.option span{white-space:pre-wrap}
+.option.right{border-color:var(--accent);color:var(--accent)}
+.option.wrong{border-color:var(--error);color:var(--error)}
+.feedback:not(:empty){padding:11px 13px;background:var(--bg);border-radius:8px;margin-top:15px}
+.controls{display:flex;justify-content:flex-end;margin-top:17px}
+.finish .score{color:var(--accent);font-size:clamp(3.5rem,12vw,7rem);font-weight:850;line-height:1;margin:14px 0}
+.finish .action{margin-top:22px}
+.roles{margin:6px 0 18px;color:var(--muted)}
+.entry{display:block;width:100%;min-height:105px;margin:6px 0 14px;padding:10px 13px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit;resize:vertical}
+.entry:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+label{display:block;font-weight:700;margin-top:10px}
+.finish-list{white-space:pre-wrap;overflow-wrap:anywhere}
+details{margin-top:18px}
+summary{cursor:pointer;color:var(--accent);font-weight:750}
+li{margin:10px 0}
+@media(max-width:620px){.intro{grid-template-columns:1fr;gap:22px;margin-top:22px}.mark{min-height:120px;font-size:8rem;order:-1}main{padding-top:20px;width:calc(100% - 26px)}}
+</style>
+</head>
+<body data-theme="comma">
+<main>
+  <header><strong>Miss Martha · 9A English</strong><span>Unit 3 · Chapter 11</span></header>
+  <section id="intro" class="intro" aria-labelledby="title">
+    <div>
+      <h1 id="title">Comma Control</h1>
+      <p>Find the boundary, place the comma, and decide when a detail needs a pair of commas. Play 12 editing challenges.</p>
+      <p><strong>2 players · 25–30 minutes</strong><br> Work together before you choose. Switch roles at each new round. Complete three writing challenges together.</p>
+      <button type="button" id="start" class="action">Start game</button>
+    </div>
+    <div class="mark" aria-hidden="true">,</div>
+  </section>
+  <section id="play" class="play" aria-labelledby="instruction" hidden>
+    <div class="stats"><span id="count"></span><span id="points"></span></div>
+    <progress id="progress" aria-label="Questions answered"></progress>
+    <div class="card">
+      <p class="label" id="round"></p>
+      <p id="roles" class="roles"></p>
+      <h2 id="instruction" tabindex="-1"></h2>
+      <p id="prompt" class="prompt"></p>
+      <div id="options" class="options" role="group" aria-labelledby="instruction prompt"></div>
+      <p id="feedback" class="feedback" role="status"></p>
+      <div class="controls"><button type="button" id="next" class="action" disabled>Next question</button></div>
+    </div>
+  </section>
+  <section id="mission" class="play card" aria-labelledby="missionTitle" hidden>
+    <p id="missionRound" class="label"></p>
+    <h2 id="missionTitle" tabindex="-1"></h2>
+    <p id="missionPrompt" class="prompt"></p>
+    <form id="missionForm">
+      <label for="draft" id="draftLabel"></label>
+      <textarea id="draft" class="entry" required></textarea>
+      <label for="reason" id="reasonLabel"></label>
+      <textarea id="reason" class="entry" required></textarea>
+      <div class="controls"><button class="action" type="submit" id="missionNext">Continue</button></div>
+    </form>
+  </section>
+  <section id="finish" class="finish card" aria-labelledby="done" hidden>
+    <p class="label">Comma Control</p>
+    <h2 id="done" tabindex="-1">Game complete</h2>
+    <p id="score" class="score"></p>
+    <p id="result"></p>
+    <details id="review" hidden>
+      <summary>Review missed questions</summary>
+      <ol id="mistakes"></ol>
+    </details>
+    <details id="writing">
+      <summary>See your writing challenges</summary>
+      <ol id="work" class="finish-list"></ol>
+    </details>
+    <button type="button" class="action" id="again">Play again</button>
+  </section>
+</main>
+<script>
+"use strict";
+
+const rounds = [
+  {
+    "name": "Round 1 · Spot the introduction",
+    "instruction": "Identify the opening group of words.",
+    "items": [
+      {
+        "prompt": "Before the committee meeting, the delegates checked their notes.",
+        "answer": "Introductory phrase",
+        "distractors": [
+          "Introductory dependent clause",
+          "Main clause"
+        ],
+        "explanation": "“Before the committee meeting” has no subject–verb pair. It is a prepositional phrase."
+      },
+      {
+        "prompt": "Before the delegates entered the room, they checked their notes.",
+        "answer": "Introductory dependent clause",
+        "distractors": [
+          "Introductory phrase",
+          "Main clause"
+        ],
+        "explanation": "“Before the delegates entered the room” contains a subject (“the delegates”) and a verb (“entered”). “Before” makes it dependent."
+      },
+      {
+        "prompt": "To prepare for the debate, Elena read the background guide.",
+        "answer": "Infinitive phrase",
+        "distractors": [
+          "Introductory dependent clause",
+          "Main clause"
+        ],
+        "explanation": "“To prepare for the debate” is an infinitive phrase that explains why Elena read the guide."
+      },
+      {
+        "prompt": "Although the instructions seemed clear, the team asked one more question.",
+        "answer": "Introductory dependent clause",
+        "distractors": [
+          "Introductory phrase",
+          "Main clause"
+        ],
+        "explanation": "“The instructions” and “seemed” form a subject–verb pair, and “although” makes the opening clause dependent."
+      }
+    ]
+  },
+  {
+    "name": "Round 2 · Place the comma",
+    "instruction": "Choose the correctly punctuated sentence.",
+    "items": [
+      {
+        "prompt": "When the lights went out the audience fell silent.",
+        "answer": "When the lights went out, the audience fell silent.",
+        "distractors": [
+          "When, the lights went out the audience fell silent.",
+          "When the lights, went out the audience fell silent."
+        ],
+        "explanation": "The introductory clause ends at “out.” Put the comma before the main clause."
+      },
+      {
+        "prompt": "To avoid missing the bus after rehearsal Sofia packed early.",
+        "answer": "To avoid missing the bus after rehearsal, Sofia packed early.",
+        "distractors": [
+          "To avoid, missing the bus after rehearsal Sofia packed early.",
+          "To avoid missing the bus after rehearsal Sofia, packed early."
+        ],
+        "explanation": "The whole opening phrase ends at “rehearsal.” Keep “Sofia packed” together in the main clause."
+      },
+      {
+        "prompt": "Carrying three boxes of books Malik asked for help.",
+        "answer": "Carrying three boxes of books, Malik asked for help.",
+        "distractors": [
+          "Carrying three boxes, of books Malik asked for help.",
+          "Carrying three boxes of books Malik, asked for help."
+        ],
+        "explanation": "The participial phrase ends at “books.” The comma sets it off before the person doing the carrying."
+      },
+      {
+        "prompt": "If the rain stops before noon we can practice outside.",
+        "answer": "If the rain stops before noon, we can practice outside.",
+        "distractors": [
+          "If the rain stops, before noon we can practice outside.",
+          "If the rain, stops before noon we can practice outside."
+        ],
+        "explanation": "Keep “before noon” inside the opening condition. The main clause starts with “we.”"
+      }
+    ]
+  },
+  {
+    "name": "Round 3 · Essential or extra?",
+    "instruction": "Use the context to choose the punctuation.",
+    "items": [
+      {
+        "prompt": "Only the students who signed up may enter.\nWhich version keeps that meaning?",
+        "answer": "Students who signed up may enter.",
+        "distractors": [
+          "Students, who signed up, may enter.",
+          "Students who signed up, may enter."
+        ],
+        "explanation": "The clause identifies which students may enter, so it stays with “students” without commas."
+      },
+      {
+        "prompt": "There is one school library. Its recent renovation is an extra detail.",
+        "answer": "Our school library, which was renovated last year, opens at eight.",
+        "distractors": [
+          "Our school library which was renovated last year opens at eight.",
+          "Our school library, which was renovated last year opens at eight."
+        ],
+        "explanation": "The clause gives extra information about an already identified library. Use a pair of commas."
+      },
+      {
+        "prompt": "Ms. Rivera is already identified by name. Her role is an extra detail.",
+        "answer": "Ms. Rivera, our debate coach, handed out the schedule.",
+        "distractors": [
+          "Ms. Rivera our debate coach handed out the schedule.",
+          "Ms. Rivera, our debate coach handed out the schedule."
+        ],
+        "explanation": "“Our debate coach” renames Ms. Rivera and supplies extra information. Set it off with two commas."
+      },
+      {
+        "prompt": "There are several folders. The blue label identifies the one you need.",
+        "answer": "Bring the folder with the blue label to the meeting.",
+        "distractors": [
+          "Bring the folder, with the blue label, to the meeting.",
+          "Bring the folder with the blue label, to the meeting."
+        ],
+        "explanation": "“With the blue label” identifies which folder to bring, so it stays with “folder” without commas."
+      }
+    ]
+  }
+];
+const missions = [
+  {
+    "title": "Test the boundary",
+    "prompt": "Player A types. Player B checks. Complete both openings as sentences and add any needed commas.\n1. To finish the poster on time …\n2. Although we finished the poster on time …",
+    "draft": "Player A · Write both full sentences.",
+    "reason": "Player B · Name each introduction and explain how you know which one is a clause."
+  },
+  {
+    "title": "Edit the announcement",
+    "prompt": "Player B types. Player A checks. Restore three commas.\nWhen the doors open at eight visitors should check in at the front desk. To keep the main hallway clear please leave large bags by the entrance. After the final performance ends the exhibits will stay open for thirty minutes.",
+    "draft": "Player B · Rewrite the complete announcement.",
+    "reason": "Player A · Quote the three introductions. Label each one phrase or clause."
+  },
+  {
+    "title": "Make the meaning match",
+    "prompt": "There are two debate teams, but only one won a trophy. The school has one principal, and she congratulated the winners. Write a three-sentence school news update. Use an essential clause to identify the winning team, a pair of commas to set off an extra detail about the principal, and a comma after an introductory phrase or clause.",
+    "draft": "Both players · Write your three-sentence update.",
+    "reason": "Player B · Identify the essential clause and the extra detail. Explain why their punctuation is different. Ask Player A to check your explanation."
+  }
+];
+const questions = rounds.flatMap((round, roundIndex) =>
+  round.items.map((item, itemIndex) => ({
+    ...item,
+    round: round.name,
+    instruction: round.instruction,
+    roundIndex,
+    endsRound: itemIndex === round.items.length - 1
+  }))
+);
+const ui = Object.fromEntries(Array.from(document.querySelectorAll("[id]"), element => [element.id, element]));
+let index = 0;
+let score = 0;
+let misses = [];
+let answered = false;
+let submissions = [];
+
+function shuffle(values) {
+  const result = [...values];
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+}
+
+function renderQuestion() {
+  const question = questions[index];
+  answered = false;
+  ui.count.textContent = `Question ${index + 1} of ${questions.length}`;
+  ui.points.textContent = `Score ${score}`;
+  ui.progress.value = index;
+  ui.round.textContent = question.round;
+  const editor = question.roundIndex % 2 === 0 ? "Player A" : "Player B";
+  const reviewer = editor === "Player A" ? "Player B" : "Player A";
+  ui.roles.textContent = `${editor} reads and proposes an edit. ${reviewer} explains the rule and selects your answer.`;
+  ui.instruction.textContent = question.instruction;
+  ui.prompt.textContent = question.prompt;
+  ui.feedback.textContent = "";
+  ui.options.replaceChildren();
+  ui.next.disabled = true;
+  ui.next.textContent = question.endsRound ? "Writing challenge" : "Next question";
+
+  shuffle([question.answer, ...question.distractors]).forEach((choice, position) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "option";
+    button.setAttribute("aria-pressed", "false");
+    const letter = document.createElement("b");
+    letter.textContent = String.fromCharCode(65 + position);
+    letter.setAttribute("aria-hidden", "true");
+    const label = document.createElement("span");
+    label.textContent = choice;
+    button.append(letter, label);
+    button.addEventListener("click", () => grade(question, choice, button));
+    ui.options.append(button);
+  });
+  ui.instruction.focus();
+}
+
+function grade(question, choice, selected) {
+  if (answered) return;
+  answered = true;
+  const correct = choice === question.answer;
+  if (correct) score++;
+  else misses.push(question);
+  selected.setAttribute("aria-pressed", "true");
+  for (const button of ui.options.children) {
+    button.disabled = true;
+    if (button.lastChild.textContent === question.answer) button.classList.add("right");
+    else if (button === selected) button.classList.add("wrong");
+  }
+  ui.points.textContent = `Score ${score}`;
+  ui.progress.value = index + 1;
+  ui.feedback.textContent = `${correct ? "Correct!" : "Take another look."} ${question.explanation}`;
+  ui.next.disabled = false;
+  ui.next.focus();
+}
+
+function start() {
+  index = 0;
+  score = 0;
+  misses = [];
+  submissions = [];
+  ui.mission.hidden = true;
+  ui.intro.hidden = true;
+  ui.finish.hidden = true;
+  ui.play.hidden = false;
+  ui.progress.max = questions.length;
+  renderQuestion();
+}
+
+function advance() {
+  if (!answered) return;
+  const question = questions[index];
+  if (question.endsRound) {
+    const mission = missions[question.roundIndex];
+    ui.play.hidden = true;
+    ui.mission.hidden = false;
+    ui.missionRound.textContent = `Writing challenge ${question.roundIndex + 1} of ${missions.length}`;
+    ui.missionTitle.textContent = mission.title;
+    ui.missionPrompt.textContent = mission.prompt;
+    ui.draftLabel.textContent = mission.draft;
+    ui.reasonLabel.textContent = mission.reason;
+    ui.missionForm.reset();
+    ui.missionNext.textContent = index === questions.length - 1 ? "See results" : "Start next round";
+    ui.missionTitle.focus();
+    return;
+  }
+  index++;
+  renderQuestion();
+}
+
+function submitWriting(event) {
+  event.preventDefault();
+  const emptyField = [ui.draft, ui.reason].find(field => !field.value.trim());
+  if (emptyField) {
+    emptyField.value = "";
+    emptyField.reportValidity();
+    return;
+  }
+  const { title } = missions[questions[index].roundIndex];
+  submissions.push({ title, draft: ui.draft.value.trim(), reason: ui.reason.value.trim() });
+  ui.mission.hidden = true;
+  index++;
+  if (index < questions.length) {
+    ui.play.hidden = false;
+    renderQuestion();
+    return;
+  }
+  showResults();
+}
+
+function showResults() {
+  ui.play.hidden = true;
+  ui.finish.hidden = false;
+  ui.score.textContent = `${score} / ${questions.length}`;
+  ui.result.textContent = `${Math.round(score / questions.length * 100)}% on editing questions · ${submissions.length} of ${missions.length} writing challenges completed. Take a screenshot of this result for Algebraix.`;
+  ui.writing.open = false;
+  ui.work.replaceChildren();
+  for (const submission of submissions) {
+    const entry = document.createElement("li");
+    entry.textContent = `${submission.title}\n${submission.draft}\n${submission.reason}`;
+    ui.work.append(entry);
+  }
+  ui.review.open = false;
+  ui.review.hidden = misses.length === 0;
+  ui.mistakes.replaceChildren();
+  for (const question of misses) {
+    const entry = document.createElement("li");
+    entry.textContent = `${question.prompt} — ${question.answer} ${question.explanation}`;
+    ui.mistakes.append(entry);
+  }
+  ui.done.focus();
+}
+
+ui.start.addEventListener("click", start);
+ui.next.addEventListener("click", advance);
+ui.missionForm.addEventListener("submit", submitWriting);
+ui.again.addEventListener("click", start);
+</script>
+</body>
+</html>
