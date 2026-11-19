@@ -18,6 +18,16 @@ h1,h2{line-height:1.1;letter-spacing:-.035em}
 h1{font-size:clamp(2.8rem,8.2vw,6rem);max-width:9ch}
 h2{font-size:clamp(1.6rem,4.7vw,3rem)}
 .intro{display:grid;grid-template-columns:1.2fr .8fr;align-items:center;gap:36px;padding:clamp(24px,5vw,56px);margin-top:34px;background:var(--panel);border:1px solid var(--line);border-radius:26px}
+.pair-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:18px}
+.pair-form fieldset{min-width:0;margin:0;padding:0 10px 12px;border:1px solid var(--line);border-radius:10px}
+.pair-form legend{padding:0 5px;color:var(--accent);font-weight:750}
+.pair-form label{font-size:.9rem}
+.pair-form input{width:100%;min-height:42px;margin-top:4px;padding:6px 8px;border:1px solid var(--line);border-radius:7px;background:var(--bg);color:var(--ink);font:inherit}
+.pair-form input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.pair-form .action{grid-column:1/-1;justify-self:start}
+#partners{margin:0 0 10px;overflow-wrap:anywhere}
+.change-pair{min-height:46px;margin:15px 0 0 12px;padding:6px 10px;border:0;background:none;color:var(--accent);text-decoration:underline}
+@media(max-width:440px){.pair-form{grid-template-columns:1fr}}
 .intro p{max-width:39ch;color:var(--muted);margin:18px 0 26px}
 .mark{display:grid;place-items:center;min-height:280px;border:1px solid var(--line);border-radius:18px;color:var(--accent);background:repeating-linear-gradient(0deg,transparent 0 25px,var(--line) 26px,transparent 27px),var(--halo);font:700 clamp(9rem,20vw,15rem)/.82 Georgia,serif;user-select:none}
 button{font:inherit;cursor:pointer}
@@ -65,7 +75,23 @@ li{margin:10px 0}
       <h1 id="title">Comma Control</h1>
       <p>Find the boundary, place the comma, and decide when a detail needs a pair of commas. Play 12 editing challenges.</p>
       <p><strong>2 players · 25–30 minutes</strong><br> Work together before you choose. Switch roles at each new round. Complete three writing challenges together.</p>
-      <button type="button" id="start" class="action">Start game</button>
+      <form id="pairForm" class="pair-form" autocomplete="off">
+        <fieldset>
+          <legend>Player A</legend>
+          <label for="nameA">Full name</label>
+          <input id="nameA" type="text" maxlength="100" required>
+          <label for="emailA">School email address</label>
+          <input id="emailA" type="email" maxlength="254" required>
+        </fieldset>
+        <fieldset>
+          <legend>Player B</legend>
+          <label for="nameB">Full name</label>
+          <input id="nameB" type="text" maxlength="100" required>
+          <label for="emailB">School email address</label>
+          <input id="emailB" type="email" maxlength="254" required>
+        </fieldset>
+        <button type="submit" id="start" class="action">Start game</button>
+      </form>
     </div>
     <div class="mark" aria-hidden="true">,</div>
   </section>
@@ -98,6 +124,7 @@ li{margin:10px 0}
     <p class="label">Comma Control</p>
     <h2 id="done" tabindex="-1">Game complete</h2>
     <p id="score" class="score"></p>
+    <p id="partners"></p>
     <p id="result"></p>
     <details id="review" hidden>
       <summary>Review missed questions</summary>
@@ -108,6 +135,7 @@ li{margin:10px 0}
       <ol id="work" class="finish-list"></ol>
     </details>
     <button type="button" class="action" id="again">Play again</button>
+    <button type="button" id="changePair" class="change-pair">Change players</button>
   </section>
 </main>
 <script>
@@ -276,6 +304,7 @@ let score = 0;
 let misses = [];
 let answered = false;
 let submissions = [];
+let pairNames = [];
 
 function shuffle(values) {
   const result = [...values];
@@ -339,6 +368,35 @@ function grade(question, choice, selected) {
   ui.next.focus();
 }
 
+function registerPair(event) {
+  event.preventDefault();
+  const names = [ui.nameA, ui.nameB].map(field => field.value.trim());
+  const emptyIndex = names.findIndex(name => !name);
+  if (emptyIndex !== -1) {
+    const field = [ui.nameA, ui.nameB][emptyIndex];
+    field.value = "";
+    field.reportValidity();
+    return;
+  }
+  if (ui.emailA.value.trim().toLowerCase() === ui.emailB.value.trim().toLowerCase()) {
+    ui.emailB.setCustomValidity("Enter Player B’s own school email address.");
+    ui.emailB.reportValidity();
+    return;
+  }
+  pairNames = names;
+  ui.emailA.value = "";
+  ui.emailB.value = "";
+  start();
+}
+
+function changePlayers() {
+  pairNames = [];
+  ui.pairForm.reset();
+  ui.finish.hidden = true;
+  ui.intro.hidden = false;
+  ui.nameA.focus();
+}
+
 function start() {
   index = 0;
   score = 0;
@@ -397,6 +455,7 @@ function showResults() {
   ui.play.hidden = true;
   ui.finish.hidden = false;
   ui.score.textContent = `${score} / ${questions.length}`;
+  ui.partners.textContent = pairNames.join(" · ");
   ui.result.textContent = `${Math.round(score / questions.length * 100)}% on editing questions · ${submissions.length} of ${missions.length} writing challenges completed. Take a screenshot of this result for Algebraix.`;
   ui.writing.open = false;
   ui.work.replaceChildren();
@@ -416,7 +475,11 @@ function showResults() {
   ui.done.focus();
 }
 
-ui.start.addEventListener("click", start);
+ui.pairForm.addEventListener("submit", registerPair);
+for (const input of [ui.emailA, ui.emailB]) {
+  input.addEventListener("input", () => ui.emailB.setCustomValidity(""));
+}
+ui.changePair.addEventListener("click", changePlayers);
 ui.next.addEventListener("click", advance);
 ui.missionForm.addEventListener("submit", submitWriting);
 ui.again.addEventListener("click", start);
